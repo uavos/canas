@@ -45,9 +45,10 @@ struct EmergencyData
     int8_t locationId;
 }__attribute__((__packed__));
 
-template<typename DATA_TYPE, uint8_t DEF_SRV = 0>
+template<typename T, uint8_t DEF_SRV = 0>
 struct CanAsPacket
 {
+    using DATA_TYPE     = T;
     uint8_t nodeId      = 0;
     uint8_t dataType    = toCanAsType<DATA_TYPE>();
     uint8_t serviceCode = DEF_SRV;
@@ -56,11 +57,12 @@ struct CanAsPacket
     static_assert(sizeof(DATA_TYPE) <= 4, "Wrong canas data size");
 }__attribute__((__packed__));
 
-template<typename PAYLOAD_TYPE = CanAsPacket<uint8_t[0]>, uint16_t DEF_ID = 0>
+template<typename T = CanAsPacket<uint8_t[0]>, uint16_t DEF_ID = 0>
 struct CanPacket
 {
-    uint16_t id = DEF_ID;
-    uint8_t dlc = sizeof(PAYLOAD_TYPE);
+    using PAYLOAD_TYPE  = T;
+    uint16_t id         = DEF_ID;
+    uint8_t dlc         = sizeof(PAYLOAD_TYPE);
     PAYLOAD_TYPE as;
     static_assert(sizeof(PAYLOAD_TYPE) <= 8, "Wrong can payload size");
 }__attribute__((__packed__));
