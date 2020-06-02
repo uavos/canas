@@ -55,29 +55,29 @@ CANAS_VAR(1405, float, ptuGeneralTemperature)       //general temperature       
 //ATS extension 1500
 //ATS yaw 1500-1509
 CANAS_VAR(1500, float, ptuAtsYawInternalSpeed)      //current internal PID speed                deg/sec
-CANAS_VAR(1501, float, ptuAtsYawCmdInternalSpeed)   //commanded yaw speed used in internal PID  deg/sec
+CANAS_VAR(1501, float, ptuAtsCmdYawInternalSpeed)   //commanded yaw speed used in internal PID  deg/sec
 CANAS_VAR(1502, float, ptuAtsYawInternalAcc)        //current internal PID acceleration         deg/sec^2
-CANAS_VAR(1503, float, ptuAtsYawCmdInternalAcc)     //commanded yaw acc used in internal PID    deg/sec^2
-CANAS_VAR(1504, int16_t[2], ptuAtsYawCmdPtp)        //commanded yaw point-to-point              [deg, deg]
-CANAS_VAR(1505, uint8_t, ptuAtsYawPtpState)         //point-to-point current state [0-invalid, 1-started, 2-finished]
+CANAS_VAR(1503, float, ptuAtsCmdYawInternalAcc)     //commanded yaw acc used in internal PID    deg/sec^2
+CANAS_VAR(1504, uint8_t, ptuAtsYawP2PState)         //point-to-point current state [0-invalid, 1-started, 2-finished]
+CANAS_VAR(1505, int16_t[2], ptuAtsCmdYawP2P)        //commanded yaw point-to-point              [deg, deg]
 //ATS pitch 1510-1519 
 CANAS_VAR(1510, float, ptuAtsPitchInternalSpeed)    //-----//-----
-CANAS_VAR(1511, float, ptuAtsPitchCmdInternalSpeed) //-----//-----
+CANAS_VAR(1511, float, ptuAtsCmdPitchInternalSpeed) //-----//-----
 CANAS_VAR(1512, float, ptuAtsPitchInternalAcc)      //-----//-----
-CANAS_VAR(1513, float, ptuAtsPitchCmdInternalAcc)   //-----//-----
-CANAS_VAR(1514, uint8_t, ptuAtsPitchPtpState)       //-----//-----
-CANAS_VAR(1515, int16_t[2], ptuAtsPitchCmdPtp)      //-----//-----
+CANAS_VAR(1513, float, ptuAtsCmdPitchInternalAcc)   //-----//-----
+CANAS_VAR(1514, uint8_t, ptuAtsPitchP2PState)       //-----//-----
+CANAS_VAR(1515, int16_t[2], ptuAtsCmdPitchP2P)      //-----//-----
 //ATS general 1520-1541
-CANAS_VAR(1520, uint8_t, ptuAtsControlMode)         //current control mode                      [0 - auto, 1 - manual]
-CANAS_VAR(1521, uint8_t, ptuAtsCmdControlMode)      //commanded operation mode                  [0 - auto, 1 - manual]
+CANAS_VAR(1520, uint8_t, ptuAtsControlMode)         //current control mode                 [0 - auto, 1 - manual]
+CANAS_VAR(1521, uint8_t, ptuAtsCmdControlMode)      //commanded operation mode             [0 - auto, 1 - manual]
 //ATS north
-CANAS_VAR(1522, uint8_t, ptuAtsNorthMode)           //current north mode                        [0 - auto, 1 - manual]
-CANAS_VAR(1523, uint8_t, ptuAtsCmdNorthMode)        //commanded north mode                      [0 - auto, 1 - manual]
+CANAS_VAR(1522, uint8_t, ptuAtsNorthMode)           //current north mode                   [0 - auto, 1 - manual]
+CANAS_VAR(1523, uint8_t, ptuAtsCmdNorthMode)        //commanded north mode                 [0 - auto, 1 - manual]
 CANAS_VAR(1524, float, ptuAtsNorth)                 //current north direction                   [deg]
 CANAS_VAR(1525, float, ptuAtsCmdNorth)              //commanded north direction                 [deg]
 //ATS GPS
-CANAS_VAR(1526, uint8_t, ptuAtsGpsMode)             //current ATS GPS mode                      [0 - auto, 1 - manual]
-CANAS_VAR(1527, uint8_t, ptuAtsCmdGpsMode)          //commanded ATS GPS mode                    [0 - auto, 1 - manual]
+CANAS_VAR(1526, uint8_t, ptuAtsGpsMode)             //current ATS GPS mode                 [0 - auto, 1 - manual]
+CANAS_VAR(1527, uint8_t, ptuAtsCmdGpsMode)          //commanded ATS GPS mode               [0 - auto, 1 - manual]
 CANAS_VAR(1528, float, ptuAtsGpsLatitude)           //current ATS GPS latitude                  [deg]
 CANAS_VAR(1529, float, ptuAtsCmdGpsLatitude)        //commanded ATS GPS latitude                [deg]
 CANAS_VAR(1530, float, ptuAtsGpsLongitude)          //current ATS GPS longitude                 [deg]
