@@ -4,7 +4,7 @@
 namespace canas
 {
 
-enum CanAsId
+enum Id
 {
     ptuEmergencyEvent   = 0,
 
