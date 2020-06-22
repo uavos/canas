@@ -93,4 +93,6 @@ CANAS_VAR(1538, float, ptuAtsUavGpsLongitude)       //current UAV longitude     
 CANAS_VAR(1539, float, ptuAtsCmdUavGpsLongitude)    //commanded UAV longitude                   [deg]
 CANAS_VAR(1540, float, ptuAtsUavGpsAltitude)        //current UAV GPS altitude                  [meters]
 CANAS_VAR(1541, float, ptuAtsCmdUavGpsAltitude)     //commanded UAV GPS altitude                [meters]
-
+//ATS MODEM
+CANAS_VAR(1550, float, ptuAtsModemRssi)             //current modem RSSI
+CANAS_VAR(1551, float, ptuAtsModemSnr)              //current modem SNR
