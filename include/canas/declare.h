@@ -71,28 +71,32 @@ CANAS_VAR(1515, int16_t[2], ptuAtsCmdPitchP2P)      //-----//-----
 CANAS_VAR(1520, uint8_t, ptuAtsControlMode)         //current control mode                 [0 - auto, 1 - manual]
 CANAS_VAR(1521, uint8_t, ptuAtsCmdControlMode)      //commanded operation mode             [0 - auto, 1 - manual]
 //ATS north
-CANAS_VAR(1522, uint8_t, ptuAtsNorthMode)           //current north mode                   [0 - auto, 1 - manual]
-CANAS_VAR(1523, uint8_t, ptuAtsCmdNorthMode)        //commanded north mode                 [0 - auto, 1 - manual]
-CANAS_VAR(1524, float, ptuAtsNorth)                 //current north direction                   [deg]
-CANAS_VAR(1525, float, ptuAtsCmdNorth)              //commanded north direction                 [deg]
+CANAS_VAR(1530, uint8_t, ptuAtsNorthMode)           //current north mode                   [0 - auto, 1 - manual]
+CANAS_VAR(1531, uint8_t, ptuAtsCmdNorthMode)        //commanded north mode                 [0 - auto, 1 - manual]
+CANAS_VAR(1532, float, ptuAtsNorth)                 //current north direction                   [deg]
+CANAS_VAR(1533, float, ptuAtsCmdNorth)              //commanded north direction                 [deg]
 //ATS GPS
-CANAS_VAR(1526, uint8_t, ptuAtsGpsMode)             //current ATS GPS mode                 [0 - auto, 1 - manual]
-CANAS_VAR(1527, uint8_t, ptuAtsCmdGpsMode)          //commanded ATS GPS mode               [0 - auto, 1 - manual]
-CANAS_VAR(1528, float, ptuAtsGpsLatitude)           //current ATS GPS latitude                  [deg]
-CANAS_VAR(1529, float, ptuAtsCmdGpsLatitude)        //commanded ATS GPS latitude                [deg]
-CANAS_VAR(1530, float, ptuAtsGpsLongitude)          //current ATS GPS longitude                 [deg]
-CANAS_VAR(1531, float, ptuAtsCmdGpsLongitude)       //commanded ATS GPS longitude               [deg]
-CANAS_VAR(1532, float, ptuAtsGpsAltitude)           //current ATS GPS altitude above the sea    [meters]
-CANAS_VAR(1533, float, ptuAtsCmdGpsAltitude)        //commanded ATS GPS altitude above the sea  [meters]
+CANAS_VAR(1540, uint8_t, ptuAtsGpsMode)             //current ATS GPS mode                 [0 - auto, 1 - manual]
+CANAS_VAR(1541, uint8_t, ptuAtsCmdGpsMode)          //commanded ATS GPS mode               [0 - auto, 1 - manual]
+CANAS_VAR(1542, float, ptuAtsGpsLatitude)           //current ATS GPS latitude                  [deg]
+CANAS_VAR(1543, float, ptuAtsCmdGpsLatitude)        //commanded ATS GPS latitude                [deg]
+CANAS_VAR(1544, float, ptuAtsGpsLongitude)          //current ATS GPS longitude                 [deg]
+CANAS_VAR(1545, float, ptuAtsCmdGpsLongitude)       //commanded ATS GPS longitude               [deg]
+CANAS_VAR(1546, float, ptuAtsGpsAltitude)           //current ATS GPS altitude above the sea    [meters]
+CANAS_VAR(1547, float, ptuAtsCmdGpsAltitude)        //commanded ATS GPS altitude above the sea  [meters]
+CANAS_VAR(1548, uint8_t, ptuAtsGpsSatellites)       //ATS GPS satellites count
+CANAS_VAR(1549, uint8_t, ptuAtsGpsSatellitesUsed)   //ATS GPS satellites used count
 //ATS UAV GPS
-CANAS_VAR(1534, uint8_t, ptuAtsUavGpsMode)          //current UAV GPS mode                      [0 - auto, 1 - manual]
-CANAS_VAR(1535, uint8_t, ptuAtsCmdUavGpsMode)       //commanded UAV GPS mode                    [0 - auto, 1 - manual]
-CANAS_VAR(1536, float, ptuAtsUavGpsLatitude)        //current UAV latitude                      [deg]
-CANAS_VAR(1537, float, ptuAtsCmdUavGpsLatitude)     //commanded UAV latitude                    [deg]
-CANAS_VAR(1538, float, ptuAtsUavGpsLongitude)       //current UAV longitude                     [deg]
-CANAS_VAR(1539, float, ptuAtsCmdUavGpsLongitude)    //commanded UAV longitude                   [deg]
-CANAS_VAR(1540, float, ptuAtsUavGpsAltitude)        //current UAV GPS altitude                  [meters]
-CANAS_VAR(1541, float, ptuAtsCmdUavGpsAltitude)     //commanded UAV GPS altitude                [meters]
+CANAS_VAR(1550, uint8_t, ptuAtsUavGpsMode)          //current UAV GPS mode                      [0 - auto, 1 - manual]
+CANAS_VAR(1551, uint8_t, ptuAtsCmdUavGpsMode)       //commanded UAV GPS mode                    [0 - auto, 1 - manual]
+CANAS_VAR(1552, float, ptuAtsUavGpsLatitude)        //current UAV latitude                      [deg]
+CANAS_VAR(1553, float, ptuAtsCmdUavGpsLatitude)     //commanded UAV latitude                    [deg]
+CANAS_VAR(1554, float, ptuAtsUavGpsLongitude)       //current UAV longitude                     [deg]
+CANAS_VAR(1555, float, ptuAtsCmdUavGpsLongitude)    //commanded UAV longitude                   [deg]
+CANAS_VAR(1556, float, ptuAtsUavGpsAltitude)        //current UAV GPS altitude                  [meters]
+CANAS_VAR(1557, float, ptuAtsCmdUavGpsAltitude)     //commanded UAV GPS altitude                [meters]
+CANAS_VAR(1558, uint8_t, ptuAtsUavGpsSatellites)    //UAV GPS satellites count
+CANAS_VAR(1559, uint8_t, ptuAtsUavGpsSatellitesUsed)//UAV GPS satellites used count
 //ATS MODEM
-CANAS_VAR(1550, float, ptuAtsModemRssi)             //current modem RSSI
-CANAS_VAR(1551, float, ptuAtsModemSnr)              //current modem SNR
+CANAS_VAR(1560, float, ptuAtsModemRssi)             //current modem RSSI
+CANAS_VAR(1561, float, ptuAtsModemSnr)              //current modem SNR
