@@ -24,8 +24,7 @@ static const uint8_t ESC = 219;
 static const uint8_t ESC_END = 220;
 static const uint8_t ESC_ESC = 221;
 
-struct PacketInfo
-{
+struct PacketInfo {
     Bytes::const_iterator begin;
     Bytes::const_iterator end;
 };
@@ -38,7 +37,7 @@ std::optional<PacketInfo> findPacketInByteStream(const Bytes &data);
 void truncateByteStream(Bytes &data, const PacketInfo &packet);
 void truncateByteStream(Bytes &data);
 
-}
+} // namespace slip
 
 #include "slip_timpl.h"
 

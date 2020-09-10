@@ -14,16 +14,18 @@ std::vector<uint8_t> decompose(uint16_t v)
     return {uint8_t(v & 0xFF), uint8_t(v >> 8)};
 }
 
-namespace Catch {
+namespace Catch
+{
 template<>
 struct StringMaker<std::pair<Bytes::const_iterator, Bytes::const_iterator>> {
-    static std::string convert(std::pair<Bytes::const_iterator, Bytes::const_iterator> const& value) {
+    static std::string convert(std::pair<Bytes::const_iterator, Bytes::const_iterator> const &value)
+    {
         std::stringstream result;
         result << "{" << int(*value.first) << ", " << int(*value.second) << "}" << std::endl;
         return result.str();
     }
 };
-}
+} // namespace Catch
 
 TEST_CASE("enc_simple", "[SLIP]")
 {

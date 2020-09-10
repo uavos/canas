@@ -9,10 +9,12 @@ namespace crc16ibm
 
 static const uint16_t INIT_VALUE = 0xFFFF;
 
-template<typename C> uint16_t calc(const C &data);
-template<typename T> void calc(T byte, uint16_t &crc);
+template<typename C>
+uint16_t calc(const C &data);
+template<typename T>
+void calc(T byte, uint16_t &crc);
 
-}
+} // namespace crc16ibm
 
 #include "crc16ibm_timpl.h"
 

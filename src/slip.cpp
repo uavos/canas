@@ -17,31 +17,24 @@ Bytes fromSlipEncoding(const PacketInfo &packet, bool &crcOk)
 {
     size_t dataSize = size_t(std::distance(packet.begin, std::next(packet.end)));
     //data requires begin, end markers and CRC at least
-    if(dataSize >= 4)
-    {
+    if(dataSize >= 4) {
         Bytes result;
         result.reserve(dataSize - 2 - 2); //without begin, end markers and CRC
         auto startMarker = packet.begin;
         auto endMarker = packet.end;
-        if(*startMarker == END && *endMarker == END)
-        {
-            auto startData = startMarker + 1;  //1 for END
-            auto endData = endMarker - 1;      //1 for END
-            while(startData <= endData)
-            {
+        if(*startMarker == END && *endMarker == END) {
+            auto startData = startMarker + 1; //1 for END
+            auto endData = endMarker - 1;     //1 for END
+            while(startData <= endData) {
                 bool isLastByte = (startData == endData);
                 uint8_t decodedByte;
-                if(*startData == ESC && !isLastByte && *std::next(startData) == ESC_END)
-                {
+                if(*startData == ESC && !isLastByte && *std::next(startData) == ESC_END) {
                     decodedByte = END;
                     startData++;
-                }
-                else if(*startData == ESC && !isLastByte && *std::next(startData) == ESC_ESC)
-                {
+                } else if(*startData == ESC && !isLastByte && *std::next(startData) == ESC_ESC) {
                     decodedByte = ESC;
                     startData++;
-                }
-                else
+                } else
                     decodedByte = *startData;
 
                 result.push_back(decodedByte);
@@ -66,8 +59,7 @@ std::optional<PacketInfo> findPacketInByteStream(const Bytes &data)
 {
     PacketInfo info;
     info.begin = std::find(data.begin(), data.end(), END);
-    if(info.begin != data.end())
-    {
+    if(info.begin != data.end()) {
         info.end = std::find(std::next(info.begin), data.end(), END);
         if(info.end != data.end())
             return info;
@@ -87,4 +79,4 @@ void truncateByteStream(Bytes &data)
         data.erase(data.begin(), std::next(it));
 }
 
-}
+} // namespace slip

@@ -13,8 +13,7 @@ template<typename C>
 void byteStuffing(const C &src, Bytes &dst)
 {
     static_assert(sizeof(typename C::value_type) == 1, "Container of bytes required");
-    for(auto byte: src)
-    {
+    for(auto byte: src) {
         if(byte == END)
             dst.insert(dst.end(), {ESC, ESC_END});
         else if(byte == ESC)
@@ -40,6 +39,6 @@ Bytes toSlipEncoding(const Container &data)
     return result;
 }
 
-}
+} // namespace slip
 
 #endif // SLIP_TIMPL_H

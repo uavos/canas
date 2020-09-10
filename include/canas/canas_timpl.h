@@ -13,8 +13,7 @@ template<typename It>
 uint8_t getByteAt(It begin, It end, uint8_t idx)
 {
     static_assert(sizeof(typename It::value_type) == 1, "Container of bytes required");
-    if(std::distance(begin, end) >= int(CANAS_PACKET_MIN_SIZE))
-    {
+    if(std::distance(begin, end) >= int(CANAS_PACKET_MIN_SIZE)) {
         std::advance(begin, idx);
         return *begin;
     }
@@ -74,6 +73,6 @@ uint8_t getMsgCodeFromRaw(It begin, It end)
     return getByteAt(begin, end, 6);
 }
 
-}
+} // namespace canas
 
 #endif // CANAS_TIMPL_H
