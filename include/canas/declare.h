@@ -6,6 +6,8 @@ CANAS_VAR(1303, float, ptuYawPos)           //current position                  
 CANAS_VAR(1304, float, ptuYawSpeed)         //current speed                             deg/sec
 CANAS_VAR(1305, float, ptuYawEngineTemp)    //current engine temperature                C
 CANAS_VAR(1306, uint8_t, ptuYawEngineState) //current engine state         [0 - normal, 1 - warning, 2 - critical]
+CANAS_VAR(1307, uint8_t, ptuYawCmdBrakes)   //brakes command [1 - on, 0 - off]
+CANAS_VAR(1308, uint8_t, ptuYawBrakes)      //current brakes state [1 - on, 0 - off]
 //1305-1309 reserved
 CANAS_VAR(1310, float, ptuPitchCmdPos)        //-----//-----
 CANAS_VAR(1311, float, ptuPitchCmdSpeed)      //-----//-----
@@ -14,6 +16,8 @@ CANAS_VAR(1313, float, ptuPitchPos)           //-----//-----
 CANAS_VAR(1314, float, ptuPitchSpeed)         //-----//-----
 CANAS_VAR(1315, float, ptuPitchEngineTemp)    //-----//-----
 CANAS_VAR(1316, uint8_t, ptuPitchEngineState) //-----//-----
+CANAS_VAR(1317, uint8_t, ptuPitchCmdBrakes)   //-----//-----
+CANAS_VAR(1318, uint8_t, ptuPitchBrakes)      //-----//-----
 //1315-1329 reserved
 
 //cameras 1340-1389
