@@ -56,3 +56,8 @@ CANAS_VAR(1402, uint8_t, ptuGunShutterState)  //gun shutter state               
 CANAS_VAR(1403, uint8_t, ptuCmdFan)           //fan command                               [0/1]
 CANAS_VAR(1404, uint8_t, ptuFanState)         //fan state                                 [0/1]
 CANAS_VAR(1405, float, ptuGeneralTemperature) //general temperature                       C
+
+//danger payload 1410-1420
+CANAS_VAR(1410, uint8_t, ptuCmdDangerPayloadSafety)     //danger payload safety, default = 1    [0/1]
+CANAS_VAR(1411, uint8_t, ptuCmdDangerPayloadActivate)   //danger payload activate               [0/1]
+CANAS_VAR(1412, uint8_t, ptuCmdDangerPayloadHeartbeat)  //danger payload heartbeat (incremented)
