@@ -7,81 +7,109 @@
 
 using namespace canas;
 
-TEST_CASE("id", "[CanAs]")
+TEST_CASE("getters", "[CanAs]")
 {
-    // CanAsPacket<> packet;
-    // packet.id = 42;
-    // std::vector<uint8_t> raw(sizeof(packet));
-    // memcpy(raw.data(), &packet, sizeof(packet));
-
-    // REQUIRE(getIdFromRaw(raw) == 42);
+    Packet<nodata> packet;
+    packet.id = 1;
+    packet.messageCode = 2;
+    packet.serviceCode = 3;
+    auto raw = serialize(packet);
+    REQUIRE(getIdFromRaw(raw) == 1);
+    REQUIRE(getDlcFromRaw(raw) == 0);
+    REQUIRE(getMsgCodeFromRaw(raw) == 2);
+    REQUIRE(getSrvCodeFromRaw(raw) == 3);
+    REQUIRE(getDataTypeFromRaw(raw) == NODATA);
 }
 
-TEST_CASE("type", "[CanAs]")
+template<typename T>
+void checkPacket(PayloadType type, uint8_t size)
 {
-    // std::vector<uint8_t> raw;
-
-    // CanPacket<CanAsPacket<float>> fpacket;
-    // raw.resize(sizeof(fpacket));
-    // memcpy(raw.data(), &fpacket, sizeof(fpacket));
-    // REQUIRE(getDataTypeFromRaw(raw) == FLOAT);
-
-    // CanPacket<CanAsPacket<int32_t>> i32packet;
-    // raw.resize(sizeof(i32packet));
-    // memcpy(raw.data(), &i32packet, sizeof(i32packet));
-    // REQUIRE(getDataTypeFromRaw(raw) == LONG);
+    Packet<T> packet;
+    auto raw = serialize(packet);
+    REQUIRE(getDataTypeFromRaw(raw) == type);
+    REQUIRE(getDlcFromRaw(raw) == size);
 }
 
-TEST_CASE("serdes", "[CanAs]")
+TEST_CASE("types and sizes", "[CanAs]")
 {
-    Packet<uint8_t> packet1;
-    packet1.data = 42;
-    auto data1 = serialize(packet1);
-    for(auto c: data1) {
-        std::cout << std::hex << int(c) << " ";
+    checkPacket<float>(FLOAT, 4);
+    checkPacket<int32_t>(LONG, 4);
+    checkPacket<uint32_t>(ULONG, 4);
+    checkPacket<int16_t>(SHORT, 2);
+    checkPacket<uint16_t>(USHORT, 2);
+    checkPacket<int16_t[2]>(SHORT2, 4);
+    checkPacket<int8_t>(CHAR, 1);
+    checkPacket<uint8_t>(UCHAR, 1);
+    checkPacket<uint8_t[4]>(UCHAR4, 4);
+    checkPacket<nodata>(NODATA, 0);
+    checkPacket<EmergencyData>(ERROR, 4);
+}
+
+template<typename T>
+void checkSerialize(const std::vector<uint8_t> &data, const T &value)
+{
+    Packet<T> packet;
+    memcpy(&packet.data, &value, sizeof(T));
+    auto raw = serialize(packet);
+    REQUIRE(raw.size() == data.size());
+    for(size_t i = 0; i < raw.size(); i++) {
+        REQUIRE(uint8_t(raw[i]) == data[i]);
     }
-    std::cout << std::endl;
+}
 
-    Packet<EmergencyData> packet2;
-    packet2.data.errorCode = 1;
-    packet2.data.operationId = 2;
-    packet2.data.locationId = 3;
-    auto data2 = serialize(packet2);
-    for(auto c: data2) {
-        std::cout << std::hex << int(c) << " ";
-    }
-    std::cout << std::endl;
+TEST_CASE("serialize", "[CanAs]")
+{
+    checkSerialize<float>({0, 0, 4, 0, FLOAT, 0, 0, 0, 0, 0, 0}, 0);
+    checkSerialize<int32_t>({0, 0, 4, 0, LONG, 0, 0, 42, 0, 0, 0}, 42);
+    checkSerialize<uint32_t>({0, 0, 4, 0, ULONG, 0, 0, 42, 0, 0, 0}, 42);
+    checkSerialize<int16_t>({0, 0, 2, 0, SHORT, 0, 0, 42, 0}, 42);
+    checkSerialize<uint16_t>({0, 0, 2, 0, USHORT, 0, 0, 42, 0}, 42);
+    checkSerialize<int16_t[2]>({0, 0, 4, 0, SHORT2, 0, 0, 4, 0, 2, 0}, {4, 2});
+    checkSerialize<int8_t>({0, 0, 1, 0, CHAR, 0, 0, 42}, 42);
+    checkSerialize<uint8_t>({0, 0, 1, 0, UCHAR, 0, 0, 42}, {42});
+    checkSerialize<uint8_t[4]>({0, 0, 4, 0, UCHAR4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
+    checkSerialize<nodata>({0, 0, 0, 0, NODATA, 0, 0}, nodata());
+    checkSerialize<EmergencyData>({0, 0, 4, 0, ERROR, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
+}
 
-    Packet<nodata> packet3;
-    auto data3 = serialize(packet3);
-    for(auto c: data3) {
-        std::cout << std::hex << int(c) << " ";
-    }
-    std::cout << std::endl;
+template<typename T, size_t TSize>
+void checkDeserialize(const std::array<uint8_t, TSize> &data, const T &value)
+{
+    std::array<std::byte, TSize> data2;
+    for(size_t i = 0; i < TSize; i++)
+        data2[i] = std::byte(data[i]);
+    auto packet = deserialize<Packet<T>>(data2);
+    REQUIRE(packet.dataType == getDataTypeFromRaw(data2));
+    if constexpr(std::is_array_v<T>)
+        for(size_t i = 0; i < std::extent_v<T>; i++)
+            REQUIRE(packet.data[i] == value[i]);
+    else
+        REQUIRE(packet.data == value);
+}
 
-    auto data4 = data1;
-    Packet<uint8_t> packet4;
-    packet4 = deserialize<Packet<uint8_t>>(data4);
+bool operator==(const nodata &a, const nodata &b)
+{
+    return true;
+}
 
-    auto data5 = data2;
-    Packet<EmergencyData> packet5;
-    packet5 = deserialize<Packet<EmergencyData>>(data5);
+bool operator==(const EmergencyData &a, const EmergencyData &b)
+{
+    return a.errorCode == b.errorCode &&
+           a.locationId == b.locationId &&
+           a.operationId == b.operationId;
+}
 
-    REQUIRE(packet1.id == packet4.id);
-    REQUIRE(packet1.dlc == packet4.dlc);
-    REQUIRE(packet1.data == packet4.data);
-    REQUIRE(packet1.dataType == packet4.dataType);
-    REQUIRE(packet1.messageCode == packet4.messageCode);
-    REQUIRE(packet1.nodeId == packet4.nodeId);
-    REQUIRE(packet1.serviceCode == packet4.serviceCode);
-
-    REQUIRE(packet2.id == packet5.id);
-    REQUIRE(packet2.dlc == packet5.dlc);
-    REQUIRE(packet2.data.errorCode == packet5.data.errorCode);
-    REQUIRE(packet2.data.operationId == packet5.data.operationId);
-    REQUIRE(packet2.data.locationId == packet5.data.locationId);
-    REQUIRE(packet2.dataType == packet5.dataType);
-    REQUIRE(packet2.messageCode == packet5.messageCode);
-    REQUIRE(packet2.nodeId == packet5.nodeId);
-    REQUIRE(packet2.serviceCode == packet5.serviceCode);
+TEST_CASE("deserialize", "[CanAs]")
+{
+    checkDeserialize<float, 11>({0, 0, 4, 0, FLOAT, 0, 0, 0, 0, 0, 0}, 0);
+    checkDeserialize<int32_t, 11>({0, 0, 4, 0, LONG, 0, 0, 42, 0, 0, 0}, 42);
+    checkDeserialize<uint32_t, 11>({0, 0, 4, 0, ULONG, 0, 0, 42, 0, 0, 0}, 42);
+    checkDeserialize<int16_t, 9>({0, 0, 2, 0, SHORT, 0, 0, 42, 0}, 42);
+    checkDeserialize<uint16_t, 9>({0, 0, 2, 0, USHORT, 0, 0, 42, 0}, 42);
+    checkDeserialize<int16_t[2], 11>({0, 0, 4, 0, SHORT2, 0, 0, 4, 0, 2, 0}, {4, 2});
+    checkDeserialize<int8_t, 8>({0, 0, 1, 0, CHAR, 0, 0, 42}, 42);
+    checkDeserialize<uint8_t, 8>({0, 0, 1, 0, UCHAR, 0, 0, 42}, {42});
+    checkDeserialize<uint8_t[4], 11>({0, 0, 4, 0, UCHAR4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
+    checkDeserialize<nodata, 7>({0, 0, 0, 0, NODATA, 0, 0}, nodata());
+    checkDeserialize<EmergencyData, 11>({0, 0, 4, 0, ERROR, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
 }

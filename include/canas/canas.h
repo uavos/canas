@@ -59,13 +59,17 @@ struct Packet {
     uint8_t dataType = PAYLOAD_TYPE<T>;
     uint8_t serviceCode = DEF_SRV;
     uint8_t messageCode = 0;
-    T data;
+    T data{};
 };
 
 template<typename C>
 uint16_t getIdFromRaw(const C &data);
 template<typename It>
 uint16_t getIdFromRaw(It begin, It end);
+template<typename C>
+uint8_t getDlcFromRaw(const C &data);
+template<typename It>
+uint8_t getDlcFromRaw(It begin, It end);
 template<typename C>
 uint8_t getDataTypeFromRaw(const C &data);
 template<typename It>

@@ -7,7 +7,7 @@ std::byte *serializeField(std::byte *pointer, const T &field)
     return pointer + sizeof(T);
 }
 
-template<typename T> 
+template<typename T>
 void serializePayload(std::byte *pointer, const T &payload)
 {
     serializeField(pointer, payload);
@@ -48,7 +48,7 @@ const std::byte *deserializeField(const std::byte *pointer, T &field)
     return pointer + sizeof(T);
 }
 
-template<typename T> 
+template<typename T>
 void deserializePayload(const std::byte *pointer, T &payload)
 {
     deserializeField(pointer, payload);
@@ -58,7 +58,6 @@ template<>
 void deserializePayload(const std::byte *pointer, canas::nodata &payload)
 {
 }
-
 
 template<>
 void deserializePayload(const std::byte *pointer, canas::EmergencyData &payload)

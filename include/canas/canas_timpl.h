@@ -38,16 +38,17 @@ template<>
 constexpr size_t PAYLOAD_SIZE<EmergencyData> = 4;
 
 template<typename It>
-uint8_t getByteAt(It begin, It end, uint8_t idx)
+std::byte getByteAt(It begin, It end, uint8_t idx)
 {
-    static_assert(sizeof(typename It::value_type) == 1, "Container of bytes required");
+    using value_type = typename std::iterator_traits<It>::value_type;
+    static_assert(sizeof(value_type) == 1, "Container of bytes required");
     if(std::distance(begin, end) >= int(PACKET_MIN_SIZE)) {
         std::advance(begin, idx);
         return *begin;
     }
 
     std::cerr << "getByteAt: Wrong message size" << std::endl;
-    return std::numeric_limits<uint8_t>::max();
+    return std::numeric_limits<std::byte>::max();
 }
 
 template<typename C>
@@ -59,10 +60,22 @@ uint16_t getIdFromRaw(const C &data)
 template<typename It>
 uint16_t getIdFromRaw(It begin, It end)
 {
-    auto byte0 = getByteAt(begin, end, 0);
-    auto byte1 = getByteAt(begin, end, 1);
-    uint16_t id = ((uint16_t)byte1 << 8) | byte0;
+    uint16_t byte0 = uint16_t(getByteAt(begin, end, 0));
+    uint16_t byte1 = uint16_t(getByteAt(begin, end, 1));
+    uint16_t id = (byte1 << 8) | byte0;
     return id;
+}
+
+template<typename C>
+uint8_t getDlcFromRaw(const C &data)
+{
+    return getDlcFromRaw(data.begin(), data.end());
+}
+
+template<typename It>
+uint8_t getDlcFromRaw(It begin, It end)
+{
+    return uint8_t(getByteAt(begin, end, 2));
 }
 
 template<typename C>
@@ -74,7 +87,7 @@ uint8_t getDataTypeFromRaw(const C &data)
 template<typename It>
 uint8_t getDataTypeFromRaw(It begin, It end)
 {
-    return getByteAt(begin, end, 4);
+    return uint8_t(getByteAt(begin, end, 4));
 }
 
 template<typename C>
@@ -86,7 +99,7 @@ uint8_t getSrvCodeFromRaw(const C &data)
 template<typename It>
 uint8_t getSrvCodeFromRaw(It begin, It end)
 {
-    return getByteAt(begin, end, 5);
+    return uint8_t(getByteAt(begin, end, 5));
 }
 
 template<typename C>
@@ -98,7 +111,7 @@ uint8_t getMsgCodeFromRaw(const C &data)
 template<typename It>
 uint8_t getMsgCodeFromRaw(It begin, It end)
 {
-    return getByteAt(begin, end, 6);
+    return uint8_t(getByteAt(begin, end, 6));
 }
 
 }
