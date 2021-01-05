@@ -3,7 +3,6 @@ project('canas', 'cpp',
     default_options: ['cpp_std=c++17'])
 
 canas_lib = static_library('canas',
-                           'src/canas.cpp',
                            'src/slip.cpp',
                            'src/errors.cpp',
                             include_directories: include_directories('include'))

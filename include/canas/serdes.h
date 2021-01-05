@@ -6,7 +6,7 @@
 
 namespace canas {
 
-template<typename T, size_t TSize = CANAS_PACKET_MIN_SIZE + getPayloadSize<typename T::PayloadType>()>
+template<typename T, size_t TSize = PACKET_MIN_SIZE + PAYLOAD_SIZE<typename T::PayloadType>>
 std::array<std::byte, TSize> serialize(const T &message);
 template<typename T, size_t TSize>
 T deserialize(const std::array<std::byte, TSize> &message);

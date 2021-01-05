@@ -9,10 +9,7 @@
 namespace canas
 {
 
-struct nodata {
-};
-
-enum CanAsType {
+enum PayloadType {
     NODATA = 0,
     ERROR = 1,
     FLOAT = 2,
@@ -26,25 +23,26 @@ enum CanAsType {
     UCHAR4 = 16
 };
 
-enum CanAsServiceCode {
-    IDS = 0, //identification service
-    TIS = 5  //transmission interval service
+enum ServiceCode {
+    IDS = 0,            //identification service
+    TIS = 5             //transmission interval service
 };
 
-enum CanAsError {
+enum ErrorCode {
     OK = 0,
-    OUT_OF_RANGE = -6 //CAN identifier or transmission rate out of range
+    OUT_OF_RANGE = -6   //CAN identifier or transmission rate out of range
 };
 
+struct nodata {
+};
 
 template<typename T>
-CanAsType toCanAsType();
+static constexpr uint8_t PAYLOAD_TYPE;
+template<typename T>
+static constexpr size_t PAYLOAD_SIZE = sizeof(T);
 
-template<typename PACKET>
-constexpr size_t getPayloadSize();
-
-static const size_t CANAS_PACKET_MIN_SIZE = 7;
-static const size_t CANAS_PACKET_MAX_SIZE = CANAS_PACKET_MIN_SIZE + getPayloadSize<uint8_t[4]>();
+static const size_t PACKET_MIN_SIZE = 7;
+static const size_t PACKET_MAX_SIZE = PACKET_MIN_SIZE + PAYLOAD_SIZE<uint8_t[4]>;
 
 struct EmergencyData {
     uint16_t errorCode;
@@ -53,12 +51,12 @@ struct EmergencyData {
 };
 
 template<typename T = nodata, uint16_t DEF_ID = 0, uint8_t DEF_SRV = 0>
-struct CanAsPacket {
+struct Packet {
     using PayloadType = T;
     uint16_t id = DEF_ID;
-    uint8_t dlc = getPayloadSize<T>();
+    uint8_t dlc = PAYLOAD_SIZE<T>;
     uint8_t nodeId = 0;
-    uint8_t dataType = toCanAsType<T>();
+    uint8_t dataType = PAYLOAD_TYPE<T>;
     uint8_t serviceCode = DEF_SRV;
     uint8_t messageCode = 0;
     T data;
@@ -81,7 +79,7 @@ uint8_t getMsgCodeFromRaw(const C &data);
 template<typename It>
 uint8_t getMsgCodeFromRaw(It begin, It end);
 
-} // namespace canas
+}
 
 #include "canas_timpl.h"
 

@@ -7,14 +7,14 @@
 namespace canas
 {
 #define CANAS_VAR(id, type, name) \
-    using name##_t = CanAsPacket<type, id>;
+    using name##_t = Packet<type, id>;
 #include "declare.h"
 #undef CANAS_VAR
-using ptuTisRequest_t = CanAsPacket<int16_t[2], ptuServiceRequest, TIS>;
-using ptuTisResponse_t = CanAsPacket<nodata, ptuServiceResponse, TIS>;
-using ptuIdsRequest_t = CanAsPacket<nodata, ptuServiceRequest, IDS>;
-using ptuIdsResponse_t = CanAsPacket<uint8_t[4], ptuServiceResponse, IDS>;
-using ptuEmergencyEvent_t = CanAsPacket<EmergencyData, ptuEmergencyEvent>;
-} // namespace canas
+using ptuTisRequest_t = Packet<int16_t[2], ptuServiceRequest, TIS>;
+using ptuTisResponse_t = Packet<nodata, ptuServiceResponse, TIS>;
+using ptuIdsRequest_t = Packet<nodata, ptuServiceRequest, IDS>;
+using ptuIdsResponse_t = Packet<uint8_t[4], ptuServiceResponse, IDS>;
+using ptuEmergencyEvent_t = Packet<EmergencyData, ptuEmergencyEvent>;
+}
 
 #endif // PACKETS_H

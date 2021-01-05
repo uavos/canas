@@ -4,7 +4,7 @@
 namespace canas
 {
 
-enum CanAsId {
+enum Id {
     ptuEmergencyEvent = 0,
 
 #define CANAS_VAR(id, type, name) name = (id),
@@ -15,6 +15,6 @@ enum CanAsId {
     ptuServiceResponse = 2001,
 };
 
-} // namespace canas
+}
 
 #endif // ID_H

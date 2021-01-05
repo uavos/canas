@@ -34,7 +34,7 @@ TEST_CASE("type", "[CanAs]")
 
 TEST_CASE("serdes", "[CanAs]")
 {
-    CanAsPacket<uint8_t> packet1;
+    Packet<uint8_t> packet1;
     packet1.data = 42;
     auto data1 = serialize(packet1);
     for(auto c: data1) {
@@ -42,7 +42,7 @@ TEST_CASE("serdes", "[CanAs]")
     }
     std::cout << std::endl;
 
-    CanAsPacket<EmergencyData> packet2;
+    Packet<EmergencyData> packet2;
     packet2.data.errorCode = 1;
     packet2.data.operationId = 2;
     packet2.data.locationId = 3;
@@ -52,7 +52,7 @@ TEST_CASE("serdes", "[CanAs]")
     }
     std::cout << std::endl;
 
-    CanAsPacket<nodata> packet3;
+    Packet<nodata> packet3;
     auto data3 = serialize(packet3);
     for(auto c: data3) {
         std::cout << std::hex << int(c) << " ";
@@ -60,12 +60,12 @@ TEST_CASE("serdes", "[CanAs]")
     std::cout << std::endl;
 
     auto data4 = data1;
-    CanAsPacket<uint8_t> packet4;
-    packet4 = deserialize<CanAsPacket<uint8_t>>(data4);
+    Packet<uint8_t> packet4;
+    packet4 = deserialize<Packet<uint8_t>>(data4);
 
     auto data5 = data2;
-    CanAsPacket<EmergencyData> packet5;
-    packet5 = deserialize<CanAsPacket<EmergencyData>>(data5);
+    Packet<EmergencyData> packet5;
+    packet5 = deserialize<Packet<EmergencyData>>(data5);
 
     REQUIRE(packet1.id == packet4.id);
     REQUIRE(packet1.dlc == packet4.dlc);

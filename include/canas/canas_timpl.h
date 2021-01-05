@@ -9,29 +9,39 @@
 namespace canas
 {
 
-template<typename PAYLOAD>
-constexpr size_t getPayloadSize()
-{
-    return sizeof(PAYLOAD);
-}
+template<>
+constexpr uint8_t PAYLOAD_TYPE<float> = FLOAT;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<int32_t> = LONG;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<uint32_t> = ULONG;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<int16_t> = SHORT;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<uint16_t> = USHORT;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<int16_t[2]> = SHORT2;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<int8_t> = CHAR;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<uint8_t> = UCHAR;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<uint8_t[4]> = UCHAR4;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<nodata> = NODATA;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<EmergencyData> = ERROR;
 
 template<>
-constexpr size_t getPayloadSize<canas::nodata>()
-{
-    return 0;
-}
-
+constexpr size_t PAYLOAD_SIZE<nodata> = 0;
 template<>
-constexpr size_t getPayloadSize<canas::EmergencyData>()
-{
-    return 4;
-}
+constexpr size_t PAYLOAD_SIZE<EmergencyData> = 4;
 
 template<typename It>
 uint8_t getByteAt(It begin, It end, uint8_t idx)
 {
     static_assert(sizeof(typename It::value_type) == 1, "Container of bytes required");
-    if(std::distance(begin, end) >= int(CANAS_PACKET_MIN_SIZE)) {
+    if(std::distance(begin, end) >= int(PACKET_MIN_SIZE)) {
         std::advance(begin, idx);
         return *begin;
     }
@@ -91,6 +101,6 @@ uint8_t getMsgCodeFromRaw(It begin, It end)
     return getByteAt(begin, end, 6);
 }
 
-} // namespace canas
+}
 
 #endif // CANAS_TIMPL_H
