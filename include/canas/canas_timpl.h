@@ -9,6 +9,24 @@
 namespace canas
 {
 
+template<typename PAYLOAD>
+constexpr size_t getPayloadSize()
+{
+    return sizeof(PAYLOAD);
+}
+
+template<>
+constexpr size_t getPayloadSize<canas::nodata>()
+{
+    return 0;
+}
+
+template<>
+constexpr size_t getPayloadSize<canas::EmergencyData>()
+{
+    return 4;
+}
+
 template<typename It>
 uint8_t getByteAt(It begin, It end, uint8_t idx)
 {

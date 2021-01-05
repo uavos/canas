@@ -22,7 +22,7 @@ CanAsType toCanAsType<uint8_t>() { return UCHAR; }
 template<>
 CanAsType toCanAsType<uint8_t[4]>() { return UCHAR4; }
 template<>
-CanAsType toCanAsType<uint8_t[0]>() { return NODATA; }
+CanAsType toCanAsType<nodata>() { return NODATA; }
 template<>
 CanAsType toCanAsType<EmergencyData>() { return ERROR; }
 
