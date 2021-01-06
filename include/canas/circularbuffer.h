@@ -28,11 +28,12 @@ private:
     size_t m_index;
 };
 
-template<typename T, size_t Capacity, size_t RealCapacity = Capacity + 1>
+template<typename T, size_t Capacity>
 class CircularBuffer
 {
 public:
-    using Iterator = CircularIterator<T, RealCapacity>;
+    static constexpr size_t REAL_CAPACITY = Capacity + 1;
+    using Iterator = CircularIterator<T, REAL_CAPACITY>;
     using ConstIterator = const Iterator;
 
     CircularBuffer() = default;
@@ -44,7 +45,7 @@ public:
     ConstIterator cend() const;
     void push_back(T item);
     size_t size() const;
-    size_t capacity() const;
+    constexpr size_t capacity() const;
     bool empty() const;
     void erase(ConstIterator first, ConstIterator last);
     T &operator[](size_t index);
@@ -53,7 +54,7 @@ public:
 private:
     size_t m_begin = 0;
     size_t m_size = 0;
-    std::array<T, RealCapacity> m_array;
+    std::array<T, REAL_CAPACITY> m_array;
 };
 
 #include "circularbuffer_timpl.h"
