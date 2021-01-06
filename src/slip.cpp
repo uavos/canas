@@ -9,19 +9,19 @@ namespace slip
 
 Bytes fromSlipEncoding(const Bytes &data, bool &ok)
 {
-    PacketInfo info = {data.begin(), data.end() - 1};
+    PacketInfo info = {data.begin(), data.end()};
     return fromSlipEncoding(info, ok);
 }
 
 Bytes fromSlipEncoding(const PacketInfo &packet, bool &crcOk)
 {
-    size_t dataSize = size_t(std::distance(packet.begin, std::next(packet.end)));
+    size_t dataSize = size_t(std::distance(packet.begin, packet.end));
     //data requires begin, end markers and CRC at least
     if(dataSize >= 4) {
         Bytes result;
         result.reserve(dataSize - 2 - 2); //without begin, end markers and CRC
         auto startMarker = packet.begin;
-        auto endMarker = packet.end;
+        auto endMarker = std::prev(packet.end);
         if(*startMarker == END && *endMarker == END) {
             auto startData = startMarker + 1; //1 for END
             auto endData = endMarker - 1;     //1 for END
@@ -61,15 +61,17 @@ std::optional<PacketInfo> findPacketInByteStream(const Bytes &data)
     info.begin = std::find(data.begin(), data.end(), END);
     if(info.begin != data.end()) {
         info.end = std::find(std::next(info.begin), data.end(), END);
-        if(info.end != data.end())
+        if(info.end != data.end()) {
+            info.end = std::next(info.end);
             return info;
+        }
     }
     return std::nullopt;
 }
 
 void truncateByteStream(Bytes &data, const PacketInfo &packet)
 {
-    data.erase(data.begin(), std::next(packet.end));
+    data.erase(data.begin(), packet.end);
 }
 
 void truncateByteStream(Bytes &data)

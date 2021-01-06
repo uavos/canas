@@ -362,37 +362,37 @@ TEST_CASE("finder", "[SLIP]")
 
     //good cases
     data = {END, 1, 2, 3, END};
-    expected = {data.begin(), data.end() - 1};
+    expected = {data.begin(), data.end()};
     result = findPacketInByteStream(data);
     REQUIRE(packetInfoEqual(expected.value(), result.value()));
 
     data = {1, END, 2, 3, 4, END};
-    expected = {data.begin() + 1, data.end() - 1};
+    expected = {data.begin() + 1, data.end()};
     result = findPacketInByteStream(data);
     REQUIRE(packetInfoEqual(expected.value(), result.value()));
 
     data = {END, 1, 2, 3, END, 4};
-    expected = {data.begin(), data.end() - 2};
+    expected = {data.begin(), data.end() - 1};
     result = findPacketInByteStream(data);
     REQUIRE(packetInfoEqual(expected.value(), result.value()));
 
     data = {1, END, 2, 3, 4, END, 5};
-    expected = {data.begin() + 1, data.end() - 2};
+    expected = {data.begin() + 1, data.end() - 1};
     result = findPacketInByteStream(data);
     REQUIRE(packetInfoEqual(expected.value(), result.value()));
 
     data = {1, END, 2, 3, 4, END, 5, END};
-    expected = {data.begin() + 1, data.end() - 3};
+    expected = {data.begin() + 1, data.end() - 2};
     result = findPacketInByteStream(data);
     REQUIRE(packetInfoEqual(expected.value(), result.value()));
 
     data = {1, 2, 3, 4, END, END, 5};
-    expected = {data.begin() + 4, data.end() - 2};
+    expected = {data.begin() + 4, data.end() - 1};
     result = findPacketInByteStream(data);
     REQUIRE(packetInfoEqual(expected.value(), result.value()));
 
     data = {1, 2, 3, 4, END, END};
-    expected = {data.begin() + 4, data.end() - 1};
+    expected = {data.begin() + 4, data.end()};
     result = findPacketInByteStream(data);
     REQUIRE(packetInfoEqual(expected.value(), result.value()));
 
@@ -417,25 +417,25 @@ TEST_CASE("truncate", "[SLIP]")
 
     data = {1, END, 2, 3, 4, END, 5};
     expected = {5};
-    packet = {data.begin() + 1, data.end() - 2};
+    packet = {data.begin() + 1, data.end() - 1};
     truncateByteStream(data, packet.value());
     REQUIRE(data == expected);
 
     data = {1, END, 2, 3, 4, END};
     expected = {};
-    packet = {data.begin() + 1, data.end() - 1};
+    packet = {data.begin() + 1, data.end()};
     truncateByteStream(data, packet.value());
     REQUIRE(data == expected);
 
     data = {END, 2, 3, 4, END, 5};
     expected = {5};
-    packet = {data.begin(), data.end() - 2};
+    packet = {data.begin(), data.end() - 1};
     truncateByteStream(data, packet.value());
     REQUIRE(data == expected);
 
     data = {1, END, END, 2};
     expected = {2};
-    packet = {data.begin() + 1, data.end() - 2};
+    packet = {data.begin() + 1, data.end() - 1};
     truncateByteStream(data, packet.value());
     REQUIRE(data == expected);
 
