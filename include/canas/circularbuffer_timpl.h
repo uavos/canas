@@ -27,6 +27,13 @@ CircularIterator<T, Capacity> &CircularIterator<T, Capacity>::operator+(size_t s
 }
 
 template<typename T, size_t Capacity>
+CircularIterator<T, Capacity> &CircularIterator<T, Capacity>::operator-(size_t size)
+{
+    m_index = (ssize_t(m_index) - ssize_t(size)) % Capacity;
+    return *this;
+}
+
+template<typename T, size_t Capacity>
 CircularIterator<T, Capacity> &CircularIterator<T, Capacity>::operator++()
 {
     m_index = (m_index + 1) % Capacity;
@@ -67,27 +74,40 @@ void CircularBuffer<T, Capacity>::clear()
 }
 
 template<typename T, size_t Capacity>
-typename CircularBuffer<T, Capacity>::Iterator CircularBuffer<T, Capacity>::begin()
+typename CircularBuffer<T, Capacity>::iterator CircularBuffer<T, Capacity>::begin()
 {
-    return CircularIterator<T, REAL_CAPACITY>(m_array.data(), m_begin);
+    return CircularBuffer<T, Capacity>::iterator((T*)&m_array, m_begin);
 }
 
 template<typename T, size_t Capacity>
-typename CircularBuffer<T, Capacity>::Iterator CircularBuffer<T, Capacity>::end()
+typename CircularBuffer<T, Capacity>::const_iterator CircularBuffer<T, Capacity>::begin() const
 {
-    return CircularIterator<T, REAL_CAPACITY>(m_array.data(), (m_begin + m_size) % m_array.size());
+    return CircularBuffer<T, Capacity>::const_iterator((T*)&m_array, m_begin);
 }
 
 template<typename T, size_t Capacity>
-typename CircularBuffer<T, Capacity>::ConstIterator CircularBuffer<T, Capacity>::cbegin() const
+typename CircularBuffer<T, Capacity>::const_iterator CircularBuffer<T, Capacity>::cbegin() const
 {
-    return CircularIterator<T, REAL_CAPACITY>(m_array.data(), m_begin);
+    return begin();
 }
 
 template<typename T, size_t Capacity>
-typename CircularBuffer<T, Capacity>::ConstIterator CircularBuffer<T, Capacity>::cend() const
+typename CircularBuffer<T, Capacity>::iterator CircularBuffer<T, Capacity>::end()
 {
-    return CircularIterator<T, REAL_CAPACITY>(m_array.data(), (m_begin + m_size) % m_array.size());
+    return CircularBuffer<T, Capacity>::iterator((T*)&m_array, (m_begin + m_size) % REAL_CAPACITY);
+}
+
+
+template<typename T, size_t Capacity>
+typename CircularBuffer<T, Capacity>::const_iterator CircularBuffer<T, Capacity>::end() const
+{
+    return CircularBuffer<T, Capacity>::const_iterator((T*)&m_array, (m_begin + m_size) % REAL_CAPACITY);
+}
+
+template<typename T, size_t Capacity>
+typename CircularBuffer<T, Capacity>::const_iterator CircularBuffer<T, Capacity>::cend() const
+{
+    return end();
 }
 
 template<typename T, size_t Capacity>
@@ -95,7 +115,7 @@ void CircularBuffer<T, Capacity>::push_back(T item)
 {
     if(m_size + 1 <= Capacity) {
         m_size++;
-        m_array[(m_begin + m_size - 1) % m_array.size()] = item;
+        m_array[(m_begin + m_size - 1) % REAL_CAPACITY] = item;
     }
 }
 
@@ -118,11 +138,11 @@ bool CircularBuffer<T, Capacity>::empty() const
 }
 
 template<typename T, size_t Capacity>
-void CircularBuffer<T, Capacity>::erase(ConstIterator first, ConstIterator last)
+void CircularBuffer<T, Capacity>::erase(const_iterator first, const_iterator last)
 {
     size_t sizeToRemove = std::min(size_t(std::distance(first, last)), m_size);
     if(first == begin()) {
-        m_begin = (m_begin + sizeToRemove) % m_array.size();
+        m_begin = (m_begin + sizeToRemove) % REAL_CAPACITY;
     } else if(last != end()) {
         auto first2 = first;
         auto last2 = last;
@@ -139,11 +159,11 @@ void CircularBuffer<T, Capacity>::erase(ConstIterator first, ConstIterator last)
 template<typename T, size_t Capacity>
 T &CircularBuffer<T, Capacity>::operator[](size_t index)
 {
-    return m_array[(m_begin + index) % m_array.size()];
+    return m_array[(m_begin + index) % REAL_CAPACITY];
 }
 
 template<typename T, size_t Capacity>
 const T &CircularBuffer<T, Capacity>::operator[](size_t index) const
 {
-    return m_array[(m_begin + index) % m_array.size()];
+    return m_array[(m_begin + index) % REAL_CAPACITY];
 }

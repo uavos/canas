@@ -2,17 +2,16 @@
 #define CRC16IBM_H
 
 #include <cstdint>
-#include <vector>
+#include <cstddef>
 
 namespace crc16ibm
 {
 
 static const uint16_t INIT_VALUE = 0xFFFF;
 
-template<typename C>
-uint16_t calc(const C &data);
-template<typename T>
-void calc(T byte, uint16_t &crc);
+template<typename Container>
+uint16_t calc(const Container &data);
+void calc(std::byte byte, uint16_t &crc);
 
 } // namespace crc16ibm
 

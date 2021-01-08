@@ -41,16 +41,11 @@ static const std::array<uint16_t, 256> crc16table = {
     0x4400, 0x84C1, 0x8581, 0x4540, 0x8701, 0x47C0, 0x4680, 0x8641,
     0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040};
 
-template<typename T>
-void calc(T byte, uint16_t &crc)
+template<typename Container>
+uint16_t calc(const Container &data)
 {
-    static_assert(sizeof(T) == 1, "Container of bytes required");
-    crc = ((crc >> 8)) ^ crc16table.at((crc ^ (byte)) & 0xFF);
-}
-
-template<typename C>
-uint16_t calc(const C &data)
-{
+    using DataType = typename Container::value_type;
+    static_assert(std::is_same_v<DataType, std::byte>, "Container of std::byte required");
     uint16_t crc = INIT_VALUE;
     for(auto byte: data)
         calc(byte, crc);
