@@ -1,3 +1,5 @@
+#pragma once
+
 #include "serdes.h"
 
 template<typename T>
@@ -67,8 +69,8 @@ void deserializePayload(const std::byte *pointer, canas::EmergencyData &payload)
     pointer = deserializeField(pointer, payload.locationId);
 }
 
-template<typename T, size_t TSize>
-T deserialize(const std::array<std::byte, TSize> &message)
+template<typename T, typename Container>
+T deserialize(const Container &message)
 {
     T result;
     auto pointer = message.data();

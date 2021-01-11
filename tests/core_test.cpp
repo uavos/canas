@@ -3,7 +3,6 @@
 
 #include <cstring>
 #include "canas/canas.h"
-#include "canas/serdes.h"
 
 using namespace canas;
 

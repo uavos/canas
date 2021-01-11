@@ -1,10 +1,9 @@
-#ifndef CANAS_TIMPL_H
-#define CANAS_TIMPL_H
+#pragma once
 
 #include <cstdint>
 #include <iostream>
 #include <limits>
-#include "canas.h"
+#include "core.h"
 
 namespace canas
 {
@@ -113,5 +112,3 @@ uint8_t getMsgCodeFromRaw(It begin, It end)
 }
 
 }
-
-#endif // CANAS_TIMPL_H

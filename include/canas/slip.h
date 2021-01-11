@@ -1,5 +1,4 @@
-#ifndef SLIP_H
-#define SLIP_H
+#pragma once
 
 #include <vector>
 #include <cstdint>
@@ -45,5 +44,3 @@ void truncateByteStream(Container &data);
 } // namespace slip
 
 #include "slip_timpl.h"
-
-#endif // SLIP_H

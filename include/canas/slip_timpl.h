@@ -1,7 +1,8 @@
-#ifndef SLIP_TIMPL_H
-#define SLIP_TIMPL_H
+#pragma once
 
 #include "slip.h"
+
+#include <algorithm>
 #include "crc16ibm.h"
 
 using namespace crc16ibm;
@@ -59,9 +60,8 @@ std::vector<std::byte> fromSlipEncoding(const PacketInfo<It> &packet, bool &crcO
         auto endMarker = std::prev(packet.end);
         if(*startMarker == END && *endMarker == END) {
             auto startData = startMarker + 1; //1 for END
-            auto endData = endMarker - 1;     //1 for END
-            while(startData <= endData) {
-                bool isLastByte = (startData == endData);
+            while(startData != endMarker) {
+                bool isLastByte = (startData == endMarker - 1); // 1 for END
                 std::byte decodedByte;
                 if(*startData == ESC && !isLastByte && *std::next(startData) == ESC_END) {
                     decodedByte = END;
@@ -119,5 +119,3 @@ void truncateByteStream(Container &data)
 }
 
 } // namespace slip
-
-#endif // SLIP_TIMPL_H

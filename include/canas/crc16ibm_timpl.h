@@ -1,5 +1,4 @@
-#ifndef CRC16IBM_TIMPL_H
-#define CRC16IBM_TIMPL_H
+#pragma once
 
 #include <cstdint>
 #include <array>
@@ -51,5 +50,3 @@ uint16_t calc(const Container &data)
 }
 
 } // namespace crc16ibm
-
-#endif // CRC16IBM_TIMPL_H

@@ -1,5 +1,4 @@
-#ifndef PACKETS_H
-#define PACKETS_H
+#pragma once
 
 #include "canas.h"
 #include "id.h"
@@ -16,5 +15,3 @@ using ptuIdsRequest_t = Packet<nodata, ptuServiceRequest, IDS>;
 using ptuIdsResponse_t = Packet<uint8_t[4], ptuServiceResponse, IDS>;
 using ptuEmergencyEvent_t = Packet<EmergencyData, ptuEmergencyEvent>;
 }
-
-#endif // PACKETS_H

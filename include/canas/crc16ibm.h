@@ -1,5 +1,4 @@
-#ifndef CRC16IBM_H
-#define CRC16IBM_H
+#pragma once
 
 #include <cstdint>
 #include <cstddef>
@@ -16,5 +15,3 @@ void calc(std::byte byte, uint16_t &crc);
 } // namespace crc16ibm
 
 #include "crc16ibm_timpl.h"
-
-#endif // CRC16IBM_H

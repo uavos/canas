@@ -1,5 +1,4 @@
-#ifndef ID_H
-#define ID_H
+#pragma once
 
 namespace canas
 {
@@ -16,5 +15,3 @@ enum Id {
 };
 
 }
-
-#endif // ID_H

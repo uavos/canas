@@ -1,3 +1,5 @@
+#pragma once
+
 #include "circularbuffer.h"
 
 template<typename T, size_t Capacity>
@@ -52,13 +54,13 @@ template<typename U, size_t C>
 bool operator==(const CircularIterator<U, C> &a, const CircularIterator<U, C> &b)
 {
     return a.m_index == b.m_index && a.m_data == b.m_data;
-};
+}
 
 template<typename U, size_t C>
 bool operator!=(const CircularIterator<U, C> &a, const CircularIterator<U, C> &b)
 {
     return a.m_index != b.m_index || a.m_data != b.m_data;
-};
+}
 
 template<typename T, size_t Capacity>
 CircularBuffer<T, Capacity>::CircularBuffer(std::initializer_list<T> list)

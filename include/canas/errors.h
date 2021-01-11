@@ -1,5 +1,4 @@
-#ifndef ERRORS_H
-#define ERRORS_H
+#pragma once
 
 #include <string>
 #include "packets.h"
@@ -40,5 +39,3 @@ enum BlacErrors {
 std::string emergency2string(const EmergencyData &data);
 
 } // namespace canas
-
-#endif // ERRORS_H
