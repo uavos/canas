@@ -34,8 +34,10 @@ std::vector<std::byte> decompose(uint16_t v)
 namespace Catch
 {
 template<>
-struct StringMaker<std::pair<Bytes::const_iterator, Bytes::const_iterator>> {
-    static std::string convert(std::pair<Bytes::const_iterator, Bytes::const_iterator> const &value)
+struct StringMaker<std::pair<std::vector<std::byte>::const_iterator,
+                             std::vector<std::byte>::const_iterator>> {
+    static std::string convert(std::pair<std::vector<std::byte>::const_iterator,
+                                         std::vector<std::byte>::const_iterator> const &value)
     {
         std::stringstream result;
         result << "{" << int(*value.first) << ", " << int(*value.second) << "}" << std::endl;

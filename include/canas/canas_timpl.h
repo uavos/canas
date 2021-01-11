@@ -40,8 +40,6 @@ constexpr size_t PAYLOAD_SIZE<EmergencyData> = 4;
 template<typename It>
 std::byte getByteAt(It begin, It end, uint8_t idx)
 {
-    using value_type = typename std::iterator_traits<It>::value_type;
-    static_assert(sizeof(value_type) == 1, "Container of bytes required");
     if(std::distance(begin, end) >= int(PACKET_MIN_SIZE)) {
         std::advance(begin, idx);
         return *begin;

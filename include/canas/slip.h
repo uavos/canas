@@ -18,8 +18,6 @@
 namespace slip
 {
 
-using Bytes = std::vector<std::byte>;
-
 static const std::byte END{192};
 static const std::byte ESC{219};
 static const std::byte ESC_END{220};
@@ -32,11 +30,11 @@ struct PacketInfo {
 };
 
 template<typename Container>
-Bytes toSlipEncoding(const Container &data);
+std::vector<std::byte> toSlipEncoding(const Container &data);
 template<typename Container>
-Bytes fromSlipEncoding(const Container &data, bool &ok);
+std::vector<std::byte> fromSlipEncoding(const Container &data, bool &ok);
 template<typename It>
-Bytes fromSlipEncoding(const PacketInfo<It> &packet, bool &crcOk);
+std::vector<std::byte> fromSlipEncoding(const PacketInfo<It> &packet, bool &crcOk);
 template<typename Container, typename It = typename Container::iterator>
 std::optional<PacketInfo<It>> findPacketInByteStream(const Container &data);
 template<typename Container, typename It = typename Container::iterator>

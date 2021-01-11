@@ -10,10 +10,8 @@ namespace slip
 {
 
 template<typename C>
-void byteStuffing(const C &src, Bytes &dst)
+void byteStuffing(const C &src, std::vector<std::byte> &dst)
 {
-    using value_type = typename std::iterator_traits<typename C::iterator>::value_type;
-    static_assert(sizeof(value_type) == 1, "Container of bytes required");
     for(auto byte: src) {
         if(byte == END)
             dst.insert(dst.end(), {ESC, ESC_END});
@@ -25,16 +23,17 @@ void byteStuffing(const C &src, Bytes &dst)
 }
 
 template<typename Container>
-Bytes toSlipEncoding(const Container &data)
+std::vector<std::byte> toSlipEncoding(const Container &data)
 {
-    Bytes result;
+    std::vector<std::byte> result;
     result.reserve(data.size() * 2 + 2 + 2 * 2); //x2 bytes data worst case, 2 bytes markers, 2 bytes crc worst case
     result.push_back(END);
 
     byteStuffing(data, result);
 
     uint16_t crc = calc(data);
-    Bytes crcBytes = {std::byte(uint8_t(crc >> 8)), std::byte(uint8_t(crc & 0xFF))};
+    std::array<std::byte, 2> crcBytes = {std::byte(uint8_t(crc >> 8)),
+                                         std::byte(uint8_t(crc & 0xFF))};
     byteStuffing(crcBytes, result);
 
     result.push_back(END);
@@ -42,19 +41,19 @@ Bytes toSlipEncoding(const Container &data)
 }
 
 template<typename Container>
-Bytes fromSlipEncoding(const Container &data, bool &ok)
+std::vector<std::byte> fromSlipEncoding(const Container &data, bool &ok)
 {
     PacketInfo<typename Container::const_iterator> info = {data.begin(), data.end()};
     return fromSlipEncoding(info, ok);
 }
 
 template<typename It>
-Bytes fromSlipEncoding(const PacketInfo<It> &packet, bool &crcOk)
+std::vector<std::byte> fromSlipEncoding(const PacketInfo<It> &packet, bool &crcOk)
 {
     size_t dataSize = size_t(std::distance(packet.begin, packet.end));
     //data requires begin, end markers and CRC at least
     if(dataSize >= 4) {
-        Bytes result;
+        std::vector<std::byte> result;
         result.reserve(dataSize - 2 - 2); //without begin, end markers and CRC
         auto startMarker = packet.begin;
         auto endMarker = std::prev(packet.end);

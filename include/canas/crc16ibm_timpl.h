@@ -44,8 +44,6 @@ static const std::array<uint16_t, 256> crc16table = {
 template<typename Container>
 uint16_t calc(const Container &data)
 {
-    using DataType = typename Container::value_type;
-    static_assert(std::is_same_v<DataType, std::byte>, "Container of std::byte required");
     uint16_t crc = INIT_VALUE;
     for(auto byte: data)
         calc(byte, crc);
