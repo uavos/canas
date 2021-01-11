@@ -22,17 +22,19 @@ typename CircularIterator<T, Capacity>::pointer CircularIterator<T, Capacity>::o
 }
 
 template<typename T, size_t Capacity>
-CircularIterator<T, Capacity> &CircularIterator<T, Capacity>::operator+(size_t size)
+CircularIterator<T, Capacity> CircularIterator<T, Capacity>::operator+(size_t size)
 {
-    m_index = (m_index + size) % Capacity;
-    return *this;
+    size_t newIndex = (m_index + size) % Capacity;
+    CircularIterator<T, Capacity> temp(m_data, newIndex);
+    return temp;
 }
 
 template<typename T, size_t Capacity>
-CircularIterator<T, Capacity> &CircularIterator<T, Capacity>::operator-(size_t size)
+CircularIterator<T, Capacity> CircularIterator<T, Capacity>::operator-(size_t size)
 {
-    m_index = (ssize_t(m_index) - ssize_t(size)) % Capacity;
-    return *this;
+    size_t newIndex = (ssize_t(m_index) - ssize_t(size)) % Capacity;
+    CircularIterator<T, Capacity> temp(m_data, newIndex);
+    return temp;
 }
 
 template<typename T, size_t Capacity>
@@ -47,6 +49,21 @@ CircularIterator<T, Capacity> CircularIterator<T, Capacity>::operator++(int)
 {
     CircularIterator<T, Capacity> tmp = *this;
     ++(*this);
+    return tmp;
+}
+
+template<typename T, size_t Capacity>
+CircularIterator<T, Capacity> &CircularIterator<T, Capacity>::operator--()
+{
+    m_index = (ssize_t(m_index) - 1) % Capacity;
+    return *this;
+}
+
+template<typename T, size_t Capacity>
+CircularIterator<T, Capacity> CircularIterator<T, Capacity>::operator--(int)
+{
+    CircularIterator<T, Capacity> tmp = *this;
+    --(*this);
     return tmp;
 }
 

@@ -4,7 +4,7 @@ template<typename T, size_t Capacity>
 class CircularIterator
 {
 public:
-    using iterator_category = std::forward_iterator_tag;
+    using iterator_category = std::bidirectional_iterator_tag;
     using difference_type = std::ptrdiff_t;
     using value_type = T;
     using pointer = T *;
@@ -16,8 +16,10 @@ public:
     pointer operator->();
     CircularIterator<T, Capacity> &operator++();
     CircularIterator<T, Capacity> operator++(int);
-    CircularIterator<T, Capacity> &operator+(size_t size);
-    CircularIterator<T, Capacity> &operator-(size_t size);
+    CircularIterator<T, Capacity> &operator--();
+    CircularIterator<T, Capacity> operator--(int);
+    CircularIterator<T, Capacity> operator+(size_t size);
+    CircularIterator<T, Capacity> operator-(size_t size);
     template<typename U, size_t C>
     friend bool operator==(const CircularIterator<U, C> &a, const CircularIterator<U, C> &b);
     template<typename U, size_t C>
