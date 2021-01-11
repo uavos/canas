@@ -1,6 +1,7 @@
 #pragma once
 
-#include "serdes.h"
+namespace canas
+{
 
 template<typename T>
 std::byte *serializeField(std::byte *pointer, const T &field)
@@ -16,17 +17,9 @@ void serializePayload(std::byte *pointer, const T &payload)
 }
 
 template<>
-void serializePayload(std::byte *pointer, const canas::nodata &payload)
-{
-}
-
+void serializePayload(std::byte *pointer, const nodata &payload);
 template<>
-void serializePayload(std::byte *pointer, const canas::EmergencyData &payload)
-{
-    pointer = serializeField(pointer, payload.errorCode);
-    pointer = serializeField(pointer, payload.operationId);
-    pointer = serializeField(pointer, payload.locationId);
-}
+void serializePayload(std::byte *pointer, const EmergencyData &payload);
 
 template<typename T, size_t TSize>
 std::array<std::byte, TSize> serialize(const T &message)
@@ -57,17 +50,9 @@ void deserializePayload(const std::byte *pointer, T &payload)
 }
 
 template<>
-void deserializePayload(const std::byte *pointer, canas::nodata &payload)
-{
-}
-
+void deserializePayload(const std::byte *pointer, nodata &payload);
 template<>
-void deserializePayload(const std::byte *pointer, canas::EmergencyData &payload)
-{
-    pointer = deserializeField(pointer, payload.errorCode);
-    pointer = deserializeField(pointer, payload.operationId);
-    pointer = deserializeField(pointer, payload.locationId);
-}
+void deserializePayload(const std::byte *pointer, EmergencyData &payload);
 
 template<typename T, typename Container>
 T deserialize(const Container &message)
@@ -83,3 +68,5 @@ T deserialize(const Container &message)
     deserializePayload(pointer, result.data);
     return result;
 }
+
+} // namespace canas

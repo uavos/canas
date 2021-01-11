@@ -5,8 +5,6 @@
 #include "canas/crc16ibm.h"
 #include "canas/circularbuffer.h"
 
-#include <iostream>
-
 using namespace slip;
 using namespace crc16ibm;
 
