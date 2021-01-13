@@ -58,7 +58,7 @@ TEST_CASE("+/-", "[CircularIterator]")
     auto it = buffer.begin();
     for(int i = 0; i < 4; i++) {
         REQUIRE(*it == i);
-        it = it + 1;;
+        it = it + 1;
     }
 
     it = buffer.end() - 1;
@@ -192,6 +192,22 @@ TEST_CASE("push and erase", "[CircularBuffer]")
         REQUIRE(buffer.size() == i + 1);
         REQUIRE(buffer[i] == i);
     }
+}
+
+TEST_CASE("append", "[CircularBuffer]")
+{
+    CircularBuffer<uint8_t, 5> buffer;
+    std::vector<uint8_t> data = {0, 1, 2};
+    buffer.append(data.begin(), data.end());
+    REQUIRE(buffer.size() == 3);
+    for(int i = 0; i < 3; i++)
+        REQUIRE(buffer[i] == i);
+    buffer.erase(buffer.begin(), buffer.end());
+    data = {0, 1, 2, 3, 4, 5, 6};
+    buffer.append(data.begin(), data.end());
+    REQUIRE(buffer.size() == 5);
+    for(int i = 0; i < 5; i++)
+        REQUIRE(buffer[i] == i);
 }
 
 TEST_CASE("iterators", "[CircularBuffer]")

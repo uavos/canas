@@ -197,6 +197,16 @@ void CircularBuffer<T, Capacity>::erase(const_iterator first, const_iterator las
 }
 
 template<typename T, size_t Capacity>
+template<typename InputIt>
+void CircularBuffer<T, Capacity>::append(InputIt first, InputIt last)
+{
+    while(first != last) {
+        push_back(T(*first));
+        first++;
+    }
+}
+
+template<typename T, size_t Capacity>
 T &CircularBuffer<T, Capacity>::operator[](size_t index)
 {
     return m_array[(m_begin + index) % REAL_CAPACITY];

@@ -54,6 +54,8 @@ public:
     constexpr size_t capacity() const;
     bool empty() const;
     void erase(const_iterator first, const_iterator last);
+    template<typename InputIt>
+    void append(InputIt first, InputIt last);
     T &operator[](size_t index);
     const T &operator[](size_t index) const;
 
