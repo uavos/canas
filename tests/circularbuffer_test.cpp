@@ -1,6 +1,78 @@
 #include <catch.hpp>
 #include "canas/circularbuffer.h"
 
+TEST_CASE("next/prev", "[CircularIterator]")
+{
+    CircularBuffer<uint8_t, 5> buffer = {0, 1, 2, 3};
+    auto it = buffer.begin();
+    for(int i = 0; i < 4; i++) {
+        REQUIRE(*it == i);
+        it = std::next(it);
+    }
+
+    it = std::prev(buffer.end());
+    for(int i = 3; i >= 0; i--) {
+        REQUIRE(*it == i);
+        it = std::prev(it);
+    }
+}
+
+TEST_CASE("++/--", "[CircularIterator]")
+{
+    CircularBuffer<uint8_t, 5> buffer = {0, 1, 2, 3};
+    auto it = buffer.begin();
+    for(int i = 0; i < 4; i++) {
+        REQUIRE(*it == i);
+        it++;
+    }
+
+    it = buffer.end() - 1;
+    for(int i = 3; i >= 0; i--) {
+        REQUIRE(*it == i);
+        it--;
+    }
+}
+
+TEST_CASE("+/-", "[CircularIterator]")
+{
+    CircularBuffer<uint8_t, 5> buffer = {0, 1, 2, 3};
+    auto it = buffer.begin();
+    for(int i = 0; i < 4; i++) {
+        REQUIRE(*it == i);
+        it = it + 1;;
+    }
+
+    it = buffer.end() - 1;
+    for(int i = 3; i >= 0; i--) {
+        REQUIRE(*it == i);
+        it = it - 1;
+    }
+}
+
+TEST_CASE("compare", "[CircularIterator]")
+{
+    CircularBuffer<uint8_t, 5> buffer = {0, 1, 2, 3};
+    REQUIRE(buffer.begin() == buffer.begin());
+    REQUIRE(buffer.begin() + 2 == buffer.end() - 2);
+    REQUIRE(buffer.begin() != buffer.end());
+}
+
+TEST_CASE("advance", "[CircularIterator]")
+{
+    CircularBuffer<uint8_t, 5> buffer = {0, 1, 2, 3};
+    auto it = buffer.begin();
+    std::advance(it, 0);
+    REQUIRE(it == buffer.begin());
+
+    it = buffer.begin();
+    std::advance(it, 2);
+    REQUIRE(it == buffer.begin() + 2);
+
+    it = buffer.end();
+    std::advance(it, -2);
+    REQUIRE(it == buffer.end() - 2);
+}
+
 TEST_CASE("push_back", "[CircularBuffer]")
 {
     CircularBuffer<uint8_t, 5> buffer;

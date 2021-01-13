@@ -367,53 +367,61 @@ TEST_CASE("dec_fail", "[SLIP]")
     REQUIRE_FALSE(ok);
 }
 
-template<typename T>
-bool packetInfoEqual(const T &left, const T &right)
-{
-    return left.begin == right.begin && left.end == right.end;
-}
-
 TEST_CASE("finder", "[SLIP]")
 {
     using Buffer = CircularBuffer<std::byte, 100>;
     Buffer data;
-    std::optional<PacketInfo<Buffer::iterator>> expected, result;
+    std::optional<PacketInfo<Buffer::const_iterator>> expected, result;
 
     //good cases
     fill(data, make_bytes(END, 1, 2, 3, END));
     expected = {data.begin(), data.end()};
     result = findPacketInByteStream(data);
-    REQUIRE(packetInfoEqual(expected.value(), result.value()));
+    REQUIRE(std::distance(result.value().begin, result.value().end) ==
+            std::distance(expected.value().begin, expected.value().end));
+    REQUIRE(std::equal(result.value().begin, result.value().end, expected.value().begin));
 
     fill(data, make_bytes(1, END, 2, 3, 4, END));
     expected = {data.begin() + 1, data.end()};
     result = findPacketInByteStream(data);
-    REQUIRE(packetInfoEqual(expected.value(), result.value()));
+    REQUIRE(std::distance(result.value().begin, result.value().end) ==
+            std::distance(expected.value().begin, expected.value().end));
+    REQUIRE(std::equal(result.value().begin, result.value().end, expected.value().begin));
 
     fill(data, make_bytes(END, 1, 2, 3, END, 4));
     expected = {data.begin(), data.end() - 1};
     result = findPacketInByteStream(data);
-    REQUIRE(packetInfoEqual(expected.value(), result.value()));
+    REQUIRE(std::distance(result.value().begin, result.value().end) ==
+            std::distance(expected.value().begin, expected.value().end));
+    REQUIRE(std::equal(result.value().begin, result.value().end, expected.value().begin));
 
     fill(data, make_bytes(1, END, 2, 3, 4, END, 5));
     expected = {data.begin() + 1, data.end() - 1};
     result = findPacketInByteStream(data);
-    REQUIRE(packetInfoEqual(expected.value(), result.value()));
+    REQUIRE(std::distance(result.value().begin, result.value().end) ==
+            std::distance(expected.value().begin, expected.value().end));
+    REQUIRE(std::equal(result.value().begin, result.value().end, expected.value().begin));
 
     fill(data, make_bytes(1, END, 2, 3, 4, END, 5, END));
     expected = {data.begin() + 1, data.end() - 2};
     result = findPacketInByteStream(data);
-    REQUIRE(packetInfoEqual(expected.value(), result.value()));
+    REQUIRE(std::distance(result.value().begin, result.value().end) ==
+            std::distance(expected.value().begin, expected.value().end));
+    REQUIRE(std::equal(result.value().begin, result.value().end, expected.value().begin));
 
     fill(data, make_bytes(1, 2, 3, 4, END, END, 5));
     expected = {data.begin() + 4, data.end() - 1};
     result = findPacketInByteStream(data);
-    REQUIRE(packetInfoEqual(expected.value(), result.value()));
+    REQUIRE(std::distance(result.value().begin, result.value().end) ==
+            std::distance(expected.value().begin, expected.value().end));
+    REQUIRE(std::equal(result.value().begin, result.value().end, expected.value().begin));
 
     fill(data, make_bytes(1, 2, 3, 4, END, END));
     expected = {data.begin() + 4, data.end()};
     result = findPacketInByteStream(data);
-    REQUIRE(packetInfoEqual(expected.value(), result.value()));
+    REQUIRE(std::distance(result.value().begin, result.value().end) ==
+            std::distance(expected.value().begin, expected.value().end));
+    REQUIRE(std::equal(result.value().begin, result.value().end, expected.value().begin));
 
     //not enough cases
     data = {};

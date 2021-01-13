@@ -67,16 +67,22 @@ CircularIterator<T, Capacity> CircularIterator<T, Capacity>::operator--(int)
     return tmp;
 }
 
-template<typename U, size_t C>
-bool operator==(const CircularIterator<U, C> &a, const CircularIterator<U, C> &b)
+template<typename T, size_t Capacity>
+bool CircularIterator<T, Capacity>::operator==(const CircularIterator<T, Capacity> &other)
 {
-    return a.m_index == b.m_index && a.m_data == b.m_data;
+    return m_index == other.m_index && m_data == other.m_data;
 }
 
-template<typename U, size_t C>
-bool operator!=(const CircularIterator<U, C> &a, const CircularIterator<U, C> &b)
+template<typename T, size_t Capacity>
+bool CircularIterator<T, Capacity>::operator!=(const CircularIterator<T, Capacity> &other)
 {
-    return a.m_index != b.m_index || a.m_data != b.m_data;
+    return m_index != other.m_index || m_data != other.m_data;
+}
+
+template<typename T, size_t Capacity>
+CircularIterator<T, Capacity>::operator CircularIterator<const T, Capacity>() const
+{
+    return CircularIterator<const T, Capacity>(m_data, m_index);
 }
 
 template<typename T, size_t Capacity>
@@ -95,13 +101,13 @@ void CircularBuffer<T, Capacity>::clear()
 template<typename T, size_t Capacity>
 typename CircularBuffer<T, Capacity>::iterator CircularBuffer<T, Capacity>::begin()
 {
-    return CircularBuffer<T, Capacity>::iterator((T*)&m_array, m_begin);
+    return CircularBuffer<T, Capacity>::iterator((T *)&m_array, m_begin);
 }
 
 template<typename T, size_t Capacity>
 typename CircularBuffer<T, Capacity>::const_iterator CircularBuffer<T, Capacity>::begin() const
 {
-    return CircularBuffer<T, Capacity>::const_iterator((T*)&m_array, m_begin);
+    return CircularBuffer<T, Capacity>::const_iterator((T *)&m_array, m_begin);
 }
 
 template<typename T, size_t Capacity>
@@ -113,14 +119,13 @@ typename CircularBuffer<T, Capacity>::const_iterator CircularBuffer<T, Capacity>
 template<typename T, size_t Capacity>
 typename CircularBuffer<T, Capacity>::iterator CircularBuffer<T, Capacity>::end()
 {
-    return CircularBuffer<T, Capacity>::iterator((T*)&m_array, (m_begin + m_size) % REAL_CAPACITY);
+    return CircularBuffer<T, Capacity>::iterator((T *)&m_array, (m_begin + m_size) % REAL_CAPACITY);
 }
-
 
 template<typename T, size_t Capacity>
 typename CircularBuffer<T, Capacity>::const_iterator CircularBuffer<T, Capacity>::end() const
 {
-    return CircularBuffer<T, Capacity>::const_iterator((T*)&m_array, (m_begin + m_size) % REAL_CAPACITY);
+    return CircularBuffer<T, Capacity>::const_iterator((T *)&m_array, (m_begin + m_size) % REAL_CAPACITY);
 }
 
 template<typename T, size_t Capacity>
@@ -160,14 +165,14 @@ template<typename T, size_t Capacity>
 void CircularBuffer<T, Capacity>::erase(const_iterator first, const_iterator last)
 {
     size_t sizeToRemove = std::min(size_t(std::distance(first, last)), m_size);
-    if(first == begin()) {
+    if(first == cbegin()) {
         m_begin = (m_begin + sizeToRemove) % REAL_CAPACITY;
-    } else if(last != end()) {
+    } else if(last != cend()) {
         auto first2 = first;
         auto last2 = last;
-        auto endit = end();
+        auto endit = cend();
         while(last2 != endit) {
-            *first2 = *last2;
+            const_cast<typename iterator::reference>(*first2) = *last2;
             last2++;
             first2++;
         }

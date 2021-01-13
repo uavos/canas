@@ -57,6 +57,10 @@ void deserializePayload(const std::byte *pointer, EmergencyData &payload);
 template<typename T, typename Container>
 T deserialize(const Container &message)
 {
+    if(PACKET_MIN_SIZE + PAYLOAD_SIZE<typename T::PayloadType> > message.size()) {
+        std::cerr << "Not enough container size" << std::endl;
+        return T();
+    }
     T result;
     auto pointer = message.data();
     pointer = deserializeField(pointer, result.id);
