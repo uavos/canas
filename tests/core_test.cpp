@@ -86,7 +86,7 @@ void checkDeserialize(const std::array<uint8_t, TSize> &data, const T &value)
         REQUIRE(packet.data == value);
 }
 
-bool operator==(const nodata &a, const nodata &b)
+bool operator==([[maybe_unused]] const nodata &a, [[maybe_unused]] const nodata &b)
 {
     return true;
 }
