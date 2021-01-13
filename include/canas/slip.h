@@ -22,22 +22,22 @@ static const std::byte ESC{219};
 static const std::byte ESC_END{220};
 static const std::byte ESC_ESC{221};
 
-template<typename It>
+template<typename Container>
 struct PacketInfo {
-    It begin;
-    It end;
+    typename Container::const_iterator begin;
+    typename Container::const_iterator end;
 };
 
 template<typename Container>
 std::vector<std::byte> toSlipEncoding(const Container &data);
 template<typename Container>
 std::vector<std::byte> fromSlipEncoding(const Container &data, bool &ok);
-template<typename It>
-std::vector<std::byte> fromSlipEncoding(const PacketInfo<It> &packet, bool &crcOk);
-template<typename Container, typename It = typename Container::const_iterator>
-std::optional<PacketInfo<It>> findPacketInByteStream(const Container &data);
-template<typename Container, typename It = typename Container::const_iterator>
-void truncateByteStream(Container &data, const PacketInfo<It> &packet);
+template<typename Container>
+std::vector<std::byte> fromSlipEncoding(const PacketInfo<Container> &packet, bool &crcOk);
+template<typename Container>
+std::optional<PacketInfo<Container>> findPacketInByteStream(const Container &data);
+template<typename Container>
+void truncateByteStream(Container &data, const PacketInfo<Container> &packet);
 template<typename Container>
 void truncateByteStream(Container &data);
 

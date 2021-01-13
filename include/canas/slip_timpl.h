@@ -44,12 +44,12 @@ std::vector<std::byte> toSlipEncoding(const Container &data)
 template<typename Container>
 std::vector<std::byte> fromSlipEncoding(const Container &data, bool &ok)
 {
-    PacketInfo<typename Container::const_iterator> info = {data.begin(), data.end()};
+    PacketInfo<Container> info = {data.begin(), data.end()};
     return fromSlipEncoding(info, ok);
 }
 
-template<typename It>
-std::vector<std::byte> fromSlipEncoding(const PacketInfo<It> &packet, bool &crcOk)
+template<typename Container>
+std::vector<std::byte> fromSlipEncoding(const PacketInfo<Container> &packet, bool &crcOk)
 {
     size_t dataSize = size_t(std::distance(packet.begin, packet.end));
     //data requires begin, end markers and CRC at least
@@ -89,10 +89,10 @@ std::vector<std::byte> fromSlipEncoding(const PacketInfo<It> &packet, bool &crcO
     return {};
 }
 
-template<typename Container, typename It>
-std::optional<PacketInfo<It>> findPacketInByteStream(const Container &data)
+template<typename Container>
+std::optional<PacketInfo<Container>> findPacketInByteStream(const Container &data)
 {
-    PacketInfo<It> info;
+    PacketInfo<Container> info;
     info.begin = std::find(data.begin(), data.end(), END);
     if(info.begin != data.end()) {
         info.end = std::find(std::next(info.begin), data.end(), END);
@@ -104,8 +104,8 @@ std::optional<PacketInfo<It>> findPacketInByteStream(const Container &data)
     return std::nullopt;
 }
 
-template<typename Container, typename It>
-void truncateByteStream(Container &data, const PacketInfo<It> &packet)
+template<typename Container>
+void truncateByteStream(Container &data, const PacketInfo<Container> &packet)
 {
     data.erase(data.begin(), packet.end);
 }

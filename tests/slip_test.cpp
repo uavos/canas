@@ -371,7 +371,7 @@ TEST_CASE("finder", "[SLIP]")
 {
     using Buffer = CircularBuffer<std::byte, 100>;
     Buffer data;
-    std::optional<PacketInfo<Buffer::const_iterator>> expected, result;
+    std::optional<PacketInfo<Buffer>> expected, result;
 
     //good cases
     fill(data, make_bytes(END, 1, 2, 3, END));
@@ -441,7 +441,7 @@ TEST_CASE("truncate", "[SLIP]")
 {
     using Buffer = CircularBuffer<std::byte, 100>;
     Buffer data, expected;
-    std::optional<PacketInfo<Buffer::iterator>> packet;
+    std::optional<PacketInfo<Buffer>> packet;
 
     fill(data, make_bytes(1, END, 2, 3, 4, END, 5));
     fill(expected, make_bytes(5));

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 template<typename T, size_t Capacity>
 class CircularIterator
 {
@@ -57,7 +59,7 @@ public:
 private:
     size_t m_begin = 0;
     size_t m_size = 0;
-    T m_array[REAL_CAPACITY];
+    std::array<T, REAL_CAPACITY> m_array;
 };
 
 #include "circularbuffer_timpl.h"
