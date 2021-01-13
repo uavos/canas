@@ -3,7 +3,26 @@
 
 TEST_CASE("next/prev", "[CircularIterator]")
 {
-    CircularBuffer<uint8_t, 5> buffer = {0, 1, 2, 3};
+    CircularBuffer<uint8_t, 4> buffer = {0, 1, 2, 3};
+    auto it = buffer.begin();
+    for(int i = 0; i < 4; i++) {
+        REQUIRE(*it == i);
+        it = std::next(it);
+    }
+
+    it = std::prev(buffer.end());
+    for(int i = 3; i >= 0; i--) {
+        REQUIRE(*it == i);
+        it = std::prev(it);
+    }
+}
+
+TEST_CASE("next/prev overflow", "[CircularIterator]")
+{
+    CircularBuffer<uint8_t, 5> buffer = {0, 0, 0, 1};
+    buffer.erase(buffer.begin(), buffer.begin() + 2);
+    buffer.push_back(2);
+    buffer.push_back(3);
     auto it = buffer.begin();
     for(int i = 0; i < 4; i++) {
         REQUIRE(*it == i);
