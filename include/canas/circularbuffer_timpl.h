@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstring>
 #include "circularbuffer.h"
 
 template<typename T, size_t Capacity>
@@ -19,26 +20,6 @@ template<typename T, size_t Capacity>
 typename CircularIterator<T, Capacity>::pointer CircularIterator<T, Capacity>::operator->()
 {
     return m_data + m_index;
-}
-
-template<typename T, size_t Capacity>
-CircularIterator<T, Capacity> CircularIterator<T, Capacity>::operator+(size_t size)
-{
-    size_t newIndex = (m_index + size) % Capacity;
-    CircularIterator<T, Capacity> temp(m_data, newIndex);
-    return temp;
-}
-
-template<typename T, size_t Capacity>
-CircularIterator<T, Capacity> CircularIterator<T, Capacity>::operator-(size_t size)
-{
-    size_t newIndex = 0;
-    if(m_index >= size)
-        newIndex = m_index - size;
-    else
-        newIndex = Capacity - (size - m_index);
-    CircularIterator<T, Capacity> temp(m_data, newIndex);
-    return temp;
 }
 
 template<typename T, size_t Capacity>
@@ -72,6 +53,32 @@ CircularIterator<T, Capacity> CircularIterator<T, Capacity>::operator--(int)
     CircularIterator<T, Capacity> tmp = *this;
     --(*this);
     return tmp;
+}
+
+template<typename T, size_t Capacity>
+CircularIterator<T, Capacity> CircularIterator<T, Capacity>::operator+(size_t size)
+{
+    size_t newIndex = (m_index + size) % Capacity;
+    CircularIterator<T, Capacity> temp(m_data, newIndex);
+    return temp;
+}
+
+template<typename T, size_t Capacity>
+CircularIterator<T, Capacity> CircularIterator<T, Capacity>::operator-(size_t size)
+{
+    size_t newIndex = 0;
+    if(m_index >= size)
+        newIndex = m_index - size;
+    else
+        newIndex = Capacity - (size - m_index);
+    CircularIterator<T, Capacity> temp(m_data, newIndex);
+    return temp;
+}
+
+template<typename T, size_t Capacity>
+size_t CircularIterator<T, Capacity>::getIndex() const
+{
+    return m_index;
 }
 
 template<typename T, size_t Capacity>
@@ -172,16 +179,18 @@ template<typename T, size_t Capacity>
 void CircularBuffer<T, Capacity>::erase(const_iterator first, const_iterator last)
 {
     size_t sizeToRemove = std::min(size_t(std::distance(first, last)), m_size);
-    if(first == cbegin()) {
+    if(first == begin()) {
         m_begin = (m_begin + sizeToRemove) % REAL_CAPACITY;
-    } else if(last != cend()) {
-        auto first2 = first;
-        auto last2 = last;
-        auto endit = cend();
-        while(last2 != endit) {
-            const_cast<typename iterator::reference>(*first2) = *last2;
-            last2++;
-            first2++;
+    } else if(last != end()) {
+        if(last.getIndex() < end().getIndex())
+            memcpy(m_array.data() + first.getIndex(), m_array.data() + last.getIndex(), sizeToRemove);
+        else {
+            auto endit = end();
+            while(last != endit) {
+                const_cast<typename iterator::reference>(*first) = *last;
+                last++;
+                first++;
+            }
         }
     }
     m_size -= sizeToRemove;

@@ -22,6 +22,7 @@ public:
     CircularIterator<T, Capacity> operator--(int);
     CircularIterator<T, Capacity> operator+(size_t size);
     CircularIterator<T, Capacity> operator-(size_t size);
+    size_t getIndex() const;
     bool operator==(const CircularIterator<T, Capacity> &other);
     bool operator!=(const CircularIterator<T, Capacity> &other);
     operator CircularIterator<const T, Capacity>() const;
