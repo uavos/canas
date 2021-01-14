@@ -182,15 +182,11 @@ void CircularBuffer<T, Capacity>::erase(const_iterator first, const_iterator las
     if(first == begin()) {
         m_begin = (m_begin + sizeToRemove) % REAL_CAPACITY;
     } else if(last != end()) {
-        if(last.getIndex() < end().getIndex())
-            memcpy(m_array.data() + first.getIndex(), m_array.data() + last.getIndex(), sizeToRemove);
-        else {
-            auto endit = end();
-            while(last != endit) {
-                const_cast<typename iterator::reference>(*first) = *last;
-                last++;
-                first++;
-            }
+        auto endit = end();
+        while(last != endit) {
+            const_cast<typename iterator::reference>(*first) = *last;
+            last++;
+            first++;
         }
     }
     m_size -= sizeToRemove;
