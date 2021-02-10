@@ -21,18 +21,27 @@ enum PayloadType {
     SHORT2 = 12,
     UCHAR4 = 16,
     UCHAR2 = 19,
+    MEMID = 21,
+    CHKSUM = 22,
     UCHAR3 = 27
 };
 
 enum ServiceCode {
-    IDS = 0,            //identification service
-    TIS = 5,            //transmission interval service
-    IDS_UAVOS = 100     //UAVOS identification service [IdsUavosType, data, data, data]
+    IDS = 0,        //identification service
+    DDS = 2,        //data download service (send data to another device)
+    TIS = 5,        //transmission interval service
+    FPS = 6,        //flash programming service
+    IDS_UAVOS = 100 //UAVOS identification service (IdsUavosType in msg code and 1-4 bytes payload)
 };
 
-enum ErrorCode {
+enum ResponseCode {
+    OUT_OF_RANGE = -6,  //CAN identifier or transmission rate out of range
+    SECURITY_FAIL = -3, //invalid security code
+    INVALID = -2,       //dds invalid response
+    ABORT = -1,         //dds abort response
     OK = 0,
-    OUT_OF_RANGE = -6   //CAN identifier or transmission rate out of range
+    XOFF = 0,
+    XON = 1
 };
 
 enum IdsUavosType {
@@ -47,13 +56,19 @@ enum IdsUavosType {
     DescriptionPart5 = 14,
     DescriptionPart6 = 15,
     DescriptionPart7 = 16,
-    SoftwareVersion = 20,  //[major.minor.patch]
-    HardwareVersion = 21,  //[major.minor.patch]
-    
+    SoftwareVersion = 20, //[major.minor.patch]
+    HardwareVersion = 21, //[major.minor.patch]
+
     NameBegin = NamePart1,
     NameEnd = NamePart4,
     DescriptionBegin = DescriptionPart1,
     DescriptionEnd = DescriptionPart7,
+};
+
+enum FpsSecurityCode {
+    Loader = 1,
+    Firmware = 2,
+    Done = 3
 };
 
 struct nodata {
@@ -73,13 +88,13 @@ struct EmergencyData {
     int8_t locationId;
 };
 
-template<typename T = nodata, uint16_t DEF_ID = 0, uint8_t DEF_SRV = 0>
+template<typename T = nodata, uint16_t DEF_ID = 0, uint8_t DEF_SRV = 0, uint8_t DEF_TYPE = PAYLOAD_TYPE<T>>
 struct Packet {
     using PayloadType = T;
     uint16_t id = DEF_ID;
     uint8_t dlc = PAYLOAD_SIZE<T>;
     uint8_t nodeId = 0;
-    uint8_t dataType = PAYLOAD_TYPE<T>;
+    uint8_t dataType = DEF_TYPE;
     uint8_t serviceCode = DEF_SRV;
     uint8_t messageCode = 0;
     T data{};
@@ -110,6 +125,6 @@ uint8_t getMsgCodeFromRaw(const C &data);
 template<typename It>
 uint8_t getMsgCodeFromRaw(It begin, It end);
 
-}
+} // namespace canas
 
 #include "core_timpl.h"
