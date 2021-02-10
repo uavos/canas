@@ -24,12 +24,29 @@ enum PayloadType {
 
 enum ServiceCode {
     IDS = 0,            //identification service
-    TIS = 5             //transmission interval service
+    TIS = 5,            //transmission interval service
+    IDS_UAVOS = 100     //UAVOS identification service [IdsUavosType, data, data, data]
 };
 
 enum ErrorCode {
     OK = 0,
     OUT_OF_RANGE = -6   //CAN identifier or transmission rate out of range
+};
+
+enum IdsUavosType {
+    NamePart1 = 0,
+    NamePart2 = 1,
+    NamePart3 = 2,
+    NamePart4 = 3,
+    DescriptionPart1 = 10,
+    DescriptionPart2 = 11,
+    DescriptionPart3 = 12,
+    DescriptionPart4 = 13,
+    DescriptionPart5 = 14,
+    DescriptionPart6 = 15,
+    DescriptionPart7 = 16,
+    SoftwareVersion = 20,  //[major.minor.patch]
+    HardwareVersion = 21,  //[major.minor.patch]
 };
 
 struct nodata {
