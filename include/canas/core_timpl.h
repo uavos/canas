@@ -25,6 +25,10 @@ constexpr uint8_t PAYLOAD_TYPE<int8_t> = CHAR;
 template<>
 constexpr uint8_t PAYLOAD_TYPE<uint8_t> = UCHAR;
 template<>
+constexpr uint8_t PAYLOAD_TYPE<uint8_t[2]> = UCHAR2;
+template<>
+constexpr uint8_t PAYLOAD_TYPE<uint8_t[3]> = UCHAR3;
+template<>
 constexpr uint8_t PAYLOAD_TYPE<uint8_t[4]> = UCHAR4;
 template<>
 constexpr uint8_t PAYLOAD_TYPE<nodata> = NODATA;
@@ -73,6 +77,18 @@ template<typename It>
 uint8_t getDlcFromRaw(It begin, It end)
 {
     return uint8_t(getByteAt(begin, end, 2));
+}
+
+template<typename C>
+uint8_t getNodeIdFromRaw(const C &data)
+{
+    return getNodeIdFromRaw(data.begin(), data.end());
+}
+
+template<typename It>
+uint8_t getNodeIdFromRaw(It begin, It end)
+{
+    return uint8_t(getByteAt(begin, end, 3));
 }
 
 template<typename C>

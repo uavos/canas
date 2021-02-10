@@ -19,7 +19,9 @@ enum PayloadType {
     CHAR = 9,
     UCHAR = 10,
     SHORT2 = 12,
-    UCHAR4 = 16
+    UCHAR4 = 16,
+    UCHAR2 = 19,
+    UCHAR3 = 27
 };
 
 enum ServiceCode {
@@ -86,6 +88,10 @@ template<typename C>
 uint8_t getDlcFromRaw(const C &data);
 template<typename It>
 uint8_t getDlcFromRaw(It begin, It end);
+template<typename C>
+uint8_t getNodeIdFromRaw(const C &data);
+template<typename It>
+uint8_t getNodeIdFromRaw(It begin, It end);
 template<typename C>
 uint8_t getDataTypeFromRaw(const C &data);
 template<typename It>
