@@ -49,6 +49,11 @@ enum IdsUavosType {
     DescriptionPart7 = 16,
     SoftwareVersion = 20,  //[major.minor.patch]
     HardwareVersion = 21,  //[major.minor.patch]
+    
+    NameBegin = NamePart1,
+    NameEnd = NamePart4,
+    DescriptionBegin = DescriptionPart1,
+    DescriptionEnd = DescriptionPart7,
 };
 
 struct nodata {
