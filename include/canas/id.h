@@ -10,6 +10,8 @@ enum Id {
 #include "declare.h"
 #undef CANAS_VAR
 
+    ptuServiceRequestHigh = 128,
+    ptuServiceResponseHigh = 129,
     ptuServiceRequest = 2000,
     ptuServiceResponse = 2001,
 };

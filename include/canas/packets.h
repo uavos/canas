@@ -22,16 +22,16 @@ using ptuIdsUavosResponse2_t = Packet<uint8_t[2], ptuServiceResponse, IDS_UAVOS>
 using ptuIdsUavosResponse3_t = Packet<uint8_t[3], ptuServiceResponse, IDS_UAVOS>;
 using ptuIdsUavosResponse4_t = Packet<uint8_t[4], ptuServiceResponse, IDS_UAVOS>;
 //FPS service
-using ptuFpsRequest_t = Packet<nodata, ptuServiceRequest, FPS>;
-using ptuFpsResponse_t = Packet<nodata, ptuServiceResponse, FPS>;
+using ptuFpsRequest_t = Packet<nodata, ptuServiceRequestHigh, FPS>;
+using ptuFpsResponse_t = Packet<nodata, ptuServiceResponseHigh, FPS>;
 //DDS service
-using ptuDdsRequestInit_t = Packet<uint32_t, ptuServiceRequest, DDS, MEMID>;
-using ptuDdsResponse_t = Packet<uint32_t, ptuServiceResponse, DDS>;
-using ptuDdsResponseFinal_t = Packet<uint32_t, ptuServiceResponse, DDS, CHKSUM>;
-using ptuDdsBlob1_t = Packet<uint8_t, ptuServiceRequest, DDS>;
-using ptuDdsBlob2_t = Packet<uint8_t[2], ptuServiceRequest, DDS>;
-using ptuDdsBlob3_t = Packet<uint8_t[3], ptuServiceRequest, DDS>;
-using ptuDdsBlob4_t = Packet<uint8_t[4], ptuServiceRequest, DDS>;
+using ptuDdsRequestInit_t = Packet<uint32_t, ptuServiceRequestHigh, DDS, MEMID>;
+using ptuDdsResponse_t = Packet<uint32_t, ptuServiceResponseHigh, DDS>;
+using ptuDdsResponseFinal_t = Packet<uint32_t, ptuServiceResponseHigh, DDS, CHKSUM>;
+using ptuDdsBlob1_t = Packet<uint8_t, ptuServiceRequestHigh, DDS>;
+using ptuDdsBlob2_t = Packet<uint8_t[2], ptuServiceRequestHigh, DDS>;
+using ptuDdsBlob3_t = Packet<uint8_t[3], ptuServiceRequestHigh, DDS>;
+using ptuDdsBlob4_t = Packet<uint8_t[4], ptuServiceRequestHigh, DDS>;
 //EED service
 using ptuEmergencyEvent_t = Packet<EmergencyData, ptuEmergencyEvent>;
 }
