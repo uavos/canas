@@ -58,17 +58,17 @@ void checkSerialize(const std::vector<uint8_t> &data, const T &value)
 
 TEST_CASE("serialize", "[CanAs]")
 {
-    checkSerialize<float>({0, 0, 4, 0, FLOAT, 0, 0, 0, 0, 0, 0}, 0);
-    checkSerialize<int32_t>({0, 0, 4, 0, LONG, 0, 0, 42, 0, 0, 0}, 42);
-    checkSerialize<uint32_t>({0, 0, 4, 0, ULONG, 0, 0, 42, 0, 0, 0}, 42);
-    checkSerialize<int16_t>({0, 0, 2, 0, SHORT, 0, 0, 42, 0}, 42);
-    checkSerialize<uint16_t>({0, 0, 2, 0, USHORT, 0, 0, 42, 0}, 42);
-    checkSerialize<int16_t[2]>({0, 0, 4, 0, SHORT2, 0, 0, 4, 0, 2, 0}, {4, 2});
-    checkSerialize<int8_t>({0, 0, 1, 0, CHAR, 0, 0, 42}, 42);
-    checkSerialize<uint8_t>({0, 0, 1, 0, UCHAR, 0, 0, 42}, {42});
-    checkSerialize<uint8_t[4]>({0, 0, 4, 0, UCHAR4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
-    checkSerialize<nodata>({0, 0, 0, 0, NODATA, 0, 0}, nodata());
-    checkSerialize<EmergencyData>({0, 0, 4, 0, ERROR, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
+    checkSerialize<float>({0, 0, 0, 0, 4, 0, FLOAT, 0, 0, 0, 0, 0, 0}, 0);
+    checkSerialize<int32_t>({0, 0, 0, 0, 4, 0, LONG, 0, 0, 42, 0, 0, 0}, 42);
+    checkSerialize<uint32_t>({0, 0, 0, 0, 4, 0, ULONG, 0, 0, 42, 0, 0, 0}, 42);
+    checkSerialize<int16_t>({0, 0, 0, 0, 2, 0, SHORT, 0, 0, 42, 0}, 42);
+    checkSerialize<uint16_t>({0, 0, 0, 0, 2, 0, USHORT, 0, 0, 42, 0}, 42);
+    checkSerialize<int16_t[2]>({0, 0, 0, 0, 4, 0, SHORT2, 0, 0, 4, 0, 2, 0}, {4, 2});
+    checkSerialize<int8_t>({0, 0, 0, 0, 1, 0, CHAR, 0, 0, 42}, 42);
+    checkSerialize<uint8_t>({0, 0, 0, 0, 1, 0, UCHAR, 0, 0, 42}, {42});
+    checkSerialize<uint8_t[4]>({0, 0, 0, 0, 4, 0, UCHAR4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
+    checkSerialize<nodata>({0, 0, 0, 0, 0, 0, NODATA, 0, 0}, nodata());
+    checkSerialize<EmergencyData>({0, 0, 0, 0, 4, 0, ERROR, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
 }
 
 template<typename T, size_t TSize>
@@ -100,15 +100,15 @@ bool operator==(const EmergencyData &a, const EmergencyData &b)
 
 TEST_CASE("deserialize", "[CanAs]")
 {
-    checkDeserialize<float, 11>({0, 0, 4, 0, FLOAT, 0, 0, 0, 0, 0, 0}, 0);
-    checkDeserialize<int32_t, 11>({0, 0, 4, 0, LONG, 0, 0, 42, 0, 0, 0}, 42);
-    checkDeserialize<uint32_t, 11>({0, 0, 4, 0, ULONG, 0, 0, 42, 0, 0, 0}, 42);
-    checkDeserialize<int16_t, 9>({0, 0, 2, 0, SHORT, 0, 0, 42, 0}, 42);
-    checkDeserialize<uint16_t, 9>({0, 0, 2, 0, USHORT, 0, 0, 42, 0}, 42);
-    checkDeserialize<int16_t[2], 11>({0, 0, 4, 0, SHORT2, 0, 0, 4, 0, 2, 0}, {4, 2});
-    checkDeserialize<int8_t, 8>({0, 0, 1, 0, CHAR, 0, 0, 42}, 42);
-    checkDeserialize<uint8_t, 8>({0, 0, 1, 0, UCHAR, 0, 0, 42}, {42});
-    checkDeserialize<uint8_t[4], 11>({0, 0, 4, 0, UCHAR4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
-    checkDeserialize<nodata, 7>({0, 0, 0, 0, NODATA, 0, 0}, nodata());
-    checkDeserialize<EmergencyData, 11>({0, 0, 4, 0, ERROR, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
+    checkDeserialize<float, 13>({0, 0, 0, 0, 4, 0, FLOAT, 0, 0, 0, 0, 0, 0}, 0);
+    checkDeserialize<int32_t, 13>({0, 0, 0, 0, 4, 0, LONG, 0, 0, 42, 0, 0, 0}, 42);
+    checkDeserialize<uint32_t, 13>({0, 0, 0, 0, 4, 0, ULONG, 0, 0, 42, 0, 0, 0}, 42);
+    checkDeserialize<int16_t, 11>({0, 0, 0, 0, 2, 0, SHORT, 0, 0, 42, 0}, 42);
+    checkDeserialize<uint16_t, 11>({0, 0, 0, 0, 2, 0, USHORT, 0, 0, 42, 0}, 42);
+    checkDeserialize<int16_t[2], 13>({0, 0, 0, 0, 4, 0, SHORT2, 0, 0, 4, 0, 2, 0}, {4, 2});
+    checkDeserialize<int8_t, 10>({0, 0, 0, 0, 1, 0, CHAR, 0, 0, 42}, 42);
+    checkDeserialize<uint8_t, 10>({0, 0, 0, 0, 1, 0, UCHAR, 0, 0, 42}, {42});
+    checkDeserialize<uint8_t[4], 13>({0, 0, 0, 0, 4, 0, UCHAR4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
+    checkDeserialize<nodata, 9>({0, 0, 0, 0, 0, 0, NODATA, 0, 0}, nodata());
+    checkDeserialize<EmergencyData, 13>({0, 0, 0, 0, 4, 0, ERROR, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
 }

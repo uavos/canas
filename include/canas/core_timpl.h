@@ -53,17 +53,18 @@ std::byte getByteAt(It begin, It end, uint8_t idx)
 }
 
 template<typename C>
-uint16_t getIdFromRaw(const C &data)
+uint32_t getIdFromRaw(const C &data)
 {
     return getIdFromRaw(data.begin(), data.end());
 }
 
 template<typename It>
-uint16_t getIdFromRaw(It begin, It end)
+uint32_t getIdFromRaw(It begin, It end)
 {
-    uint16_t byte0 = uint16_t(getByteAt(begin, end, 0));
-    uint16_t byte1 = uint16_t(getByteAt(begin, end, 1));
-    uint16_t id = (byte1 << 8) | byte0;
+    uint32_t id = uint32_t(getByteAt(begin, end, 3)) << 24 |
+                  uint32_t(getByteAt(begin, end, 2)) << 16 |
+                  uint32_t(getByteAt(begin, end, 1)) << 8 |
+                  uint32_t(getByteAt(begin, end, 0));
     return id;
 }
 
@@ -76,7 +77,7 @@ uint8_t getDlcFromRaw(const C &data)
 template<typename It>
 uint8_t getDlcFromRaw(It begin, It end)
 {
-    return uint8_t(getByteAt(begin, end, 2));
+    return uint8_t(getByteAt(begin, end, 4));
 }
 
 template<typename C>
@@ -88,7 +89,7 @@ uint8_t getNodeIdFromRaw(const C &data)
 template<typename It>
 uint8_t getNodeIdFromRaw(It begin, It end)
 {
-    return uint8_t(getByteAt(begin, end, 3));
+    return uint8_t(getByteAt(begin, end, 5));
 }
 
 template<typename C>
@@ -100,7 +101,7 @@ uint8_t getDataTypeFromRaw(const C &data)
 template<typename It>
 uint8_t getDataTypeFromRaw(It begin, It end)
 {
-    return uint8_t(getByteAt(begin, end, 4));
+    return uint8_t(getByteAt(begin, end, 6));
 }
 
 template<typename C>
@@ -112,7 +113,7 @@ uint8_t getSrvCodeFromRaw(const C &data)
 template<typename It>
 uint8_t getSrvCodeFromRaw(It begin, It end)
 {
-    return uint8_t(getByteAt(begin, end, 5));
+    return uint8_t(getByteAt(begin, end, 7));
 }
 
 template<typename C>
@@ -124,7 +125,7 @@ uint8_t getMsgCodeFromRaw(const C &data)
 template<typename It>
 uint8_t getMsgCodeFromRaw(It begin, It end)
 {
-    return uint8_t(getByteAt(begin, end, 6));
+    return uint8_t(getByteAt(begin, end, 8));
 }
 
-}
+} // namespace canas
