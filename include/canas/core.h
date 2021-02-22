@@ -73,8 +73,9 @@ enum IdsUavosType {
 };
 
 enum FpsSecurityCode {
-    WriteStart = 1,
-    WriteDone = 2,
+    Loader = 1,
+    Firmware = 2,
+    Done = 3
 };
 
 struct nodata {
