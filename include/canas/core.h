@@ -49,6 +49,10 @@ enum IdsUavosType {
     NamePart2 = 1,
     NamePart3 = 2,
     NamePart4 = 3,
+    NamePart5 = 4,
+    NamePart6 = 5,
+    NamePart7 = 6,
+    NamePart8 = 7,
     DescriptionPart1 = 10,
     DescriptionPart2 = 11,
     DescriptionPart3 = 12,
@@ -56,13 +60,16 @@ enum IdsUavosType {
     DescriptionPart5 = 14,
     DescriptionPart6 = 15,
     DescriptionPart7 = 16,
+    DescriptionPart8 = 17,
+    DescriptionPart9 = 18,
+    DescriptionPart10 = 19,
     SoftwareVersion = 20, //[major.minor.patch]
     HardwareVersion = 21, //[major.minor.patch]
 
     NameBegin = NamePart1,
-    NameEnd = NamePart4,
+    NameEnd = NamePart8,
     DescriptionBegin = DescriptionPart1,
-    DescriptionEnd = DescriptionPart7,
+    DescriptionEnd = DescriptionPart10,
 };
 
 enum FpsSecurityCode {
