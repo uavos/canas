@@ -98,7 +98,7 @@ template<typename T = nodata, uint32_t DEF_ID = 0, uint8_t DEF_SRV = 0, uint8_t 
 struct Packet {
     using PayloadType = T;
     uint32_t id = DEF_ID;
-    uint8_t dlc = PAYLOAD_SIZE<T>;
+    uint8_t dlc = PAYLOAD_SIZE<T> + 4;
     uint8_t nodeId = 0;
     uint8_t dataType = DEF_TYPE;
     uint8_t serviceCode = DEF_SRV;

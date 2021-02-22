@@ -14,7 +14,7 @@ TEST_CASE("getters", "[CanAs]")
     packet.serviceCode = 3;
     auto raw = serialize(packet);
     REQUIRE(getIdFromRaw(raw) == 1);
-    REQUIRE(getDlcFromRaw(raw) == 0);
+    REQUIRE(getDlcFromRaw(raw) == 4);
     REQUIRE(getMsgCodeFromRaw(raw) == 2);
     REQUIRE(getSrvCodeFromRaw(raw) == 3);
     REQUIRE(getDataTypeFromRaw(raw) == NODATA);
@@ -26,7 +26,7 @@ void checkPacket(PayloadType type, uint8_t size)
     Packet<T> packet;
     auto raw = serialize(packet);
     REQUIRE(getDataTypeFromRaw(raw) == type);
-    REQUIRE(getDlcFromRaw(raw) == size);
+    REQUIRE(getDlcFromRaw(raw) == size + 4);
 }
 
 TEST_CASE("types and sizes", "[CanAs]")
@@ -58,17 +58,17 @@ void checkSerialize(const std::vector<uint8_t> &data, const T &value)
 
 TEST_CASE("serialize", "[CanAs]")
 {
-    checkSerialize<float>({0, 0, 0, 0, 4, 0, FLOAT, 0, 0, 0, 0, 0, 0}, 0);
-    checkSerialize<int32_t>({0, 0, 0, 0, 4, 0, LONG, 0, 0, 42, 0, 0, 0}, 42);
-    checkSerialize<uint32_t>({0, 0, 0, 0, 4, 0, ULONG, 0, 0, 42, 0, 0, 0}, 42);
-    checkSerialize<int16_t>({0, 0, 0, 0, 2, 0, SHORT, 0, 0, 42, 0}, 42);
-    checkSerialize<uint16_t>({0, 0, 0, 0, 2, 0, USHORT, 0, 0, 42, 0}, 42);
-    checkSerialize<int16_t[2]>({0, 0, 0, 0, 4, 0, SHORT2, 0, 0, 4, 0, 2, 0}, {4, 2});
-    checkSerialize<int8_t>({0, 0, 0, 0, 1, 0, CHAR, 0, 0, 42}, 42);
-    checkSerialize<uint8_t>({0, 0, 0, 0, 1, 0, UCHAR, 0, 0, 42}, {42});
-    checkSerialize<uint8_t[4]>({0, 0, 0, 0, 4, 0, UCHAR4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
-    checkSerialize<nodata>({0, 0, 0, 0, 0, 0, NODATA, 0, 0}, nodata());
-    checkSerialize<EmergencyData>({0, 0, 0, 0, 4, 0, ERROR, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
+    checkSerialize<float>({0, 0, 0, 0, 8, 0, FLOAT, 0, 0, 0, 0, 0, 0}, 0);
+    checkSerialize<int32_t>({0, 0, 0, 0, 8, 0, LONG, 0, 0, 42, 0, 0, 0}, 42);
+    checkSerialize<uint32_t>({0, 0, 0, 0, 8, 0, ULONG, 0, 0, 42, 0, 0, 0}, 42);
+    checkSerialize<int16_t>({0, 0, 0, 0, 6, 0, SHORT, 0, 0, 42, 0}, 42);
+    checkSerialize<uint16_t>({0, 0, 0, 0, 6, 0, USHORT, 0, 0, 42, 0}, 42);
+    checkSerialize<int16_t[2]>({0, 0, 0, 0, 8, 0, SHORT2, 0, 0, 4, 0, 2, 0}, {4, 2});
+    checkSerialize<int8_t>({0, 0, 0, 0, 5, 0, CHAR, 0, 0, 42}, 42);
+    checkSerialize<uint8_t>({0, 0, 0, 0, 5, 0, UCHAR, 0, 0, 42}, {42});
+    checkSerialize<uint8_t[4]>({0, 0, 0, 0, 8, 0, UCHAR4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
+    checkSerialize<nodata>({0, 0, 0, 0, 4, 0, NODATA, 0, 0}, nodata());
+    checkSerialize<EmergencyData>({0, 0, 0, 0, 8, 0, ERROR, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
 }
 
 template<typename T, size_t TSize>
