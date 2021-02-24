@@ -1,8 +1,8 @@
-#ifndef SLIP_H
-#define SLIP_H
+#pragma once
 
 #include <vector>
 #include <cstdint>
+#include <cstddef>
 #include <optional>
 
 /* SLIP format:
@@ -17,29 +17,30 @@
 namespace slip
 {
 
-using Bytes = std::vector<uint8_t>;
+static const std::byte END{192};
+static const std::byte ESC{219};
+static const std::byte ESC_END{220};
+static const std::byte ESC_ESC{221};
 
-static const uint8_t END = 192;
-static const uint8_t ESC = 219;
-static const uint8_t ESC_END = 220;
-static const uint8_t ESC_ESC = 221;
-
-struct PacketInfo
-{
-    Bytes::const_iterator begin;
-    Bytes::const_iterator end;
+template<typename Container>
+struct PacketInfo {
+    typename Container::const_iterator begin;
+    typename Container::const_iterator end;
 };
 
 template<typename Container>
-Bytes toSlipEncoding(const Container &data);
-Bytes fromSlipEncoding(const Bytes &data, bool &ok);
-Bytes fromSlipEncoding(const PacketInfo &packet, bool &crcOk);
-std::optional<PacketInfo> findPacketInByteStream(const Bytes &data);
-void truncateByteStream(Bytes &data, const PacketInfo &packet);
-void truncateByteStream(Bytes &data);
+std::vector<std::byte> toSlipEncoding(const Container &data);
+template<typename Container>
+std::vector<std::byte> fromSlipEncoding(const Container &data, bool &ok);
+template<typename Container>
+std::vector<std::byte> fromSlipEncoding(const PacketInfo<Container> &packet, bool &crcOk);
+template<typename Container>
+std::optional<PacketInfo<Container>> findPacketInByteStream(const Container &data);
+template<typename Container>
+void truncateByteStream(Container &data, const PacketInfo<Container> &packet);
+template<typename Container>
+void truncateByteStream(Container &data);
 
-}
+} // namespace slip
 
 #include "slip_timpl.h"
-
-#endif // SLIP_H

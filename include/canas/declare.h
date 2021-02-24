@@ -6,6 +6,9 @@ CANAS_VAR(1302, float, ptuYawCmdRelPos)             //commanded shift           
 CANAS_VAR(1303, float, ptuYawPos)                   //current position                          deg
 CANAS_VAR(1304, float, ptuYawSpeed)                 //current speed                             deg/sec
 CANAS_VAR(1305, float, ptuYawEngineTemp)            //current engine temperature                C
+CANAS_VAR(1306, uint8_t, ptuYawEngineState)         //current engine state         [0 - normal, 1 - warning, 2 - critical]
+CANAS_VAR(1307, uint8_t, ptuYawCmdBrakes)           //brakes command                            [0/1]
+CANAS_VAR(1308, uint8_t, ptuYawBrakes)              //current brakes state                      [0/1]
 //pitch 1310-1319
 CANAS_VAR(1310, float, ptuPitchCmdPos)              //-----//-----
 CANAS_VAR(1311, float, ptuPitchCmdSpeed)            //-----//-----
@@ -13,6 +16,9 @@ CANAS_VAR(1312, float, ptuPitchCmdRelPos)           //-----//-----
 CANAS_VAR(1313, float, ptuPitchPos)                 //-----//-----
 CANAS_VAR(1314, float, ptuPitchSpeed)               //-----//-----
 CANAS_VAR(1315, float, ptuPitchEngineTemp)          //-----//-----
+CANAS_VAR(1316, uint8_t, ptuPitchEngineState)       //-----//-----
+CANAS_VAR(1317, uint8_t, ptuPitchCmdBrakes)         //-----//-----
+CANAS_VAR(1318, uint8_t, ptuPitchBrakes)            //-----//-----
 //1320-1329 reserved
 
 //cameras 1340-1389
@@ -51,6 +57,11 @@ CANAS_VAR(1402, uint8_t, ptuGunShutterState)        //gun shutter state         
 CANAS_VAR(1403, uint8_t, ptuCmdFan)                 //fan command                               [0/1]
 CANAS_VAR(1404, uint8_t, ptuFanState)               //fan state                                 [0/1]
 CANAS_VAR(1405, float, ptuGeneralTemperature)       //general temperature                       C
+
+//danger payload 1410-1420
+CANAS_VAR(1410, uint8_t, ptuCmdDangerPayloadSafety)     //danger payload safety, default = 1    [0/1]
+CANAS_VAR(1411, uint8_t, ptuCmdDangerPayloadActivate)   //danger payload activate               [0/1]
+CANAS_VAR(1412, uint8_t, ptuCmdDangerPayloadHeartbeat)  //danger payload heartbeat (incremented)
 
 //ATS extension 1500
 //ATS yaw 1500-1509

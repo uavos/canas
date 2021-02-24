@@ -1,5 +1,4 @@
-#ifndef CRC16IBM_TIMPL_H
-#define CRC16IBM_TIMPL_H
+#pragma once
 
 #include <cstdint>
 #include <array>
@@ -39,18 +38,10 @@ static const std::array<uint16_t, 256> crc16table = {
     0x8801, 0x48C0, 0x4980, 0x8941, 0x4B00, 0x8BC1, 0x8A81, 0x4A40,
     0x4E00, 0x8EC1, 0x8F81, 0x4F40, 0x8D01, 0x4DC0, 0x4C80, 0x8C41,
     0x4400, 0x84C1, 0x8581, 0x4540, 0x8701, 0x47C0, 0x4680, 0x8641,
-    0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040
-};
+    0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040};
 
-template<typename T>
-void calc(T byte, uint16_t &crc)
-{
-    static_assert(sizeof(T) == 1, "Container of bytes required");
-    crc = ((crc >> 8)) ^ crc16table.at((crc ^ (byte)) & 0xFF);
-}
-
-template<typename C>
-uint16_t calc(const C &data)
+template<typename Container>
+uint16_t calc(const Container &data)
 {
     uint16_t crc = INIT_VALUE;
     for(auto byte: data)
@@ -58,6 +49,4 @@ uint16_t calc(const C &data)
     return crc;
 }
 
-}
-
-#endif // CRC16IBM_TIMPL_H
+} // namespace crc16ibm
