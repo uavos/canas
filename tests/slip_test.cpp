@@ -1,6 +1,7 @@
-#include <catch.hpp>
+#include "catch2/catch.hpp"
 
 #include <cstring>
+#include <sstream>
 #include "canas/slip.h"
 #include "canas/crc16ibm.h"
 #include "canas/circularbuffer.h"

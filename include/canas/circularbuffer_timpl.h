@@ -82,13 +82,13 @@ size_t CircularIterator<T, Capacity>::getIndex() const
 }
 
 template<typename T, size_t Capacity>
-bool CircularIterator<T, Capacity>::operator==(const CircularIterator<T, Capacity> &other)
+bool CircularIterator<T, Capacity>::operator==(const CircularIterator<T, Capacity> &other) const
 {
     return m_index == other.m_index && m_data == other.m_data;
 }
 
 template<typename T, size_t Capacity>
-bool CircularIterator<T, Capacity>::operator!=(const CircularIterator<T, Capacity> &other)
+bool CircularIterator<T, Capacity>::operator!=(const CircularIterator<T, Capacity> &other) const
 {
     return m_index != other.m_index || m_data != other.m_data;
 }

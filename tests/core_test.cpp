@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_MAIN
-#include <catch.hpp>
+#include "catch2/catch.hpp"
 
 #include <cstring>
 #include "canas/canas.h"
@@ -83,7 +83,7 @@ void checkDeserialize(const std::array<uint8_t, TSize> &data, const T &value)
         for(size_t i = 0; i < std::extent_v<T>; i++)
             REQUIRE(packet.data[i] == value[i]);
     else
-        REQUIRE(packet.data == value);
+        REQUIRE((packet.data == value));
 }
 
 bool operator==([[maybe_unused]] const nodata &a, [[maybe_unused]] const nodata &b)
