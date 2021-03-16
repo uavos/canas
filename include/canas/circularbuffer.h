@@ -7,7 +7,7 @@ class CircularIterator
 {
 public:
     using iterator_category = std::bidirectional_iterator_tag;
-    using difference_type = ssize_t;
+    using difference_type = int64_t;
     using value_type = T;
     using pointer = T *;
     using reference = T &;

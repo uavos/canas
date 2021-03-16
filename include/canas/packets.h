@@ -25,9 +25,9 @@ using ptuIdsUavosResponse4_t = Packet<uint8_t[4], ptuServiceResponse, IDS_UAVOS>
 using ptuFpsRequest_t = Packet<nodata, ptuServiceRequestHigh, FPS>;
 using ptuFpsResponse_t = Packet<nodata, ptuServiceResponseHigh, FPS>;
 //DDS service
-using ptuDdsRequestInit_t = Packet<uint32_t, ptuServiceRequestHigh, DDS, MEMID>;
+using ptuDdsRequestInit_t = Packet<uint32_t, ptuServiceRequestHigh, DDS, ptMemid>;
 using ptuDdsResponse_t = Packet<uint32_t, ptuServiceResponseHigh, DDS>;
-using ptuDdsResponseFinal_t = Packet<uint32_t, ptuServiceResponseHigh, DDS, CHKSUM>;
+using ptuDdsResponseFinal_t = Packet<uint32_t, ptuServiceResponseHigh, DDS, ptChksum>;
 using ptuDdsBlob1_t = Packet<uint8_t, ptuServiceRequestHigh, DDS>;
 using ptuDdsBlob2_t = Packet<uint8_t[2], ptuServiceRequestHigh, DDS>;
 using ptuDdsBlob3_t = Packet<uint8_t[3], ptuServiceRequestHigh, DDS>;

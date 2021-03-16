@@ -9,31 +9,31 @@ namespace canas
 {
 
 template<>
-constexpr uint8_t PAYLOAD_TYPE<float> = FLOAT;
+constexpr uint8_t PAYLOAD_TYPE<float> = ptFloat;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<int32_t> = LONG;
+constexpr uint8_t PAYLOAD_TYPE<int32_t> = ptLong;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<uint32_t> = ULONG;
+constexpr uint8_t PAYLOAD_TYPE<uint32_t> = ptUlong;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<int16_t> = SHORT;
+constexpr uint8_t PAYLOAD_TYPE<int16_t> = ptShort;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<uint16_t> = USHORT;
+constexpr uint8_t PAYLOAD_TYPE<uint16_t> = ptUshort;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<int16_t[2]> = SHORT2;
+constexpr uint8_t PAYLOAD_TYPE<int16_t[2]> = ptShort2;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<int8_t> = CHAR;
+constexpr uint8_t PAYLOAD_TYPE<int8_t> = ptChar;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<uint8_t> = UCHAR;
+constexpr uint8_t PAYLOAD_TYPE<uint8_t> = ptUchar;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<uint8_t[2]> = UCHAR2;
+constexpr uint8_t PAYLOAD_TYPE<uint8_t[2]> = ptUchar2;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<uint8_t[3]> = UCHAR3;
+constexpr uint8_t PAYLOAD_TYPE<uint8_t[3]> = ptUchar3;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<uint8_t[4]> = UCHAR4;
+constexpr uint8_t PAYLOAD_TYPE<uint8_t[4]> = ptUchar4;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<nodata> = NODATA;
+constexpr uint8_t PAYLOAD_TYPE<nodata> = ptNoData;
 template<>
-constexpr uint8_t PAYLOAD_TYPE<EmergencyData> = ERROR;
+constexpr uint8_t PAYLOAD_TYPE<EmergencyData> = ptError;
 
 template<>
 constexpr size_t PAYLOAD_SIZE<nodata> = 0;

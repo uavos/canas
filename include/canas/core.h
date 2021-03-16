@@ -9,21 +9,21 @@ namespace canas
 {
 
 enum PayloadType {
-    NODATA = 0,
-    ERROR = 1,
-    FLOAT = 2,
-    LONG = 3,
-    ULONG = 4,
-    SHORT = 6,
-    USHORT = 7,
-    CHAR = 9,
-    UCHAR = 10,
-    SHORT2 = 12,
-    UCHAR4 = 16,
-    UCHAR2 = 19,
-    MEMID = 21,
-    CHKSUM = 22,
-    UCHAR3 = 27
+    ptNoData = 0,
+    ptError = 1,
+    ptFloat = 2,
+    ptLong = 3,
+    ptUlong = 4,
+    ptShort = 6,
+    ptUshort = 7,
+    ptChar = 9,
+    ptUchar = 10,
+    ptShort2 = 12,
+    ptUchar4 = 16,
+    ptUchar2 = 19,
+    ptMemid = 21,
+    ptChksum = 22,
+    ptUchar3 = 27
 };
 
 enum ServiceCode {
