@@ -31,6 +31,7 @@ enum ServiceCode {
     DDS = 2,        //data download service (send data to another device)
     TIS = 5,        //transmission interval service
     FPS = 6,        //flash programming service
+    NIS = 11,       //node id setting service
     IDS_UAVOS = 100 //UAVOS identification service (IdsUavosType in msg code and 1-4 bytes payload)
 };
 

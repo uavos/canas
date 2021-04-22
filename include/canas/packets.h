@@ -12,6 +12,9 @@ namespace canas
 //TIS service
 using ptuTisRequest_t = Packet<int16_t[2], ptuServiceRequest, TIS>;
 using ptuTisResponse_t = Packet<nodata, ptuServiceResponse, TIS>;
+//NIS serivce
+using ptuNisRequest_t = Packet<nodata, ptuServiceRequest, NIS>;
+using ptuNisResponse_t = Packet<nodata, ptuServiceResponse, NIS>;
 //IDS service
 using ptuIdsRequest_t = Packet<nodata, ptuServiceRequest, IDS>;
 using ptuIdsResponse_t = Packet<uint8_t[4], ptuServiceResponse, IDS>;
