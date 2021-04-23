@@ -7,8 +7,8 @@ CANAS_VAR(1303, float, ptuYawPos)                   //current position          
 CANAS_VAR(1304, float, ptuYawSpeed)                 //current speed                             deg/sec
 CANAS_VAR(1305, float, ptuYawEngineTemp)            //current engine temperature                C
 CANAS_VAR(1306, uint8_t, ptuYawEngineState)         //current engine state         [0 - normal, 1 - warning, 2 - critical]
-CANAS_VAR(1307, uint8_t, ptuYawCmdBrakes)           //brakes command                            [0/1]
-CANAS_VAR(1308, uint8_t, ptuYawBrakes)              //current brakes state                      [0/1]
+CANAS_VAR(1307, uint8_t, ptuYawCmdMode)             //mode command                 [0 - free run, 1 - engine only, 2 - auto brakes]
+CANAS_VAR(1308, uint8_t, ptuYawMode)                //current brakes state         [0 - free run, 1 - engine only, 2 - auto brakes]
 //pitch 1310-1319
 CANAS_VAR(1310, float, ptuPitchCmdPos)              //-----//-----
 CANAS_VAR(1311, float, ptuPitchCmdSpeed)            //-----//-----
@@ -17,8 +17,8 @@ CANAS_VAR(1313, float, ptuPitchPos)                 //-----//-----
 CANAS_VAR(1314, float, ptuPitchSpeed)               //-----//-----
 CANAS_VAR(1315, float, ptuPitchEngineTemp)          //-----//-----
 CANAS_VAR(1316, uint8_t, ptuPitchEngineState)       //-----//-----
-CANAS_VAR(1317, uint8_t, ptuPitchCmdBrakes)         //-----//-----
-CANAS_VAR(1318, uint8_t, ptuPitchBrakes)            //-----//-----
+CANAS_VAR(1317, uint8_t, ptuPitchCmdMode)           //-----//-----
+CANAS_VAR(1318, uint8_t, ptuPitchMode)              //-----//-----
 //1320-1329 reserved
 
 //cameras 1340-1389
@@ -52,11 +52,12 @@ CANAS_VAR(1394, uint8_t, ptuRangefinderRunning)     //current rangefinder state 
 
 //general PTU vars 1400
 CANAS_VAR(1400, uint8_t, ptuCmdGates)               //gates command                             [0/1]
-CANAS_VAR(1401, uint8_t, ptuCmdGunShutter)          //gun shutter command                       [1]
-CANAS_VAR(1402, uint8_t, ptuGunShutterState)        //gun shutter state                         [0/1]
+CANAS_VAR(1401, uint8_t, ptuCmdShutter)             //shutter command                           [1]
+CANAS_VAR(1402, uint8_t, ptuShutterState)           //shutter state                             [0/1]
 CANAS_VAR(1403, uint8_t, ptuCmdFan)                 //fan command                               [0/1]
 CANAS_VAR(1404, uint8_t, ptuFanState)               //fan state                                 [0/1]
 CANAS_VAR(1405, float, ptuGeneralTemperature)       //general temperature                       C
+CANAS_VAR(1406, int32_t, ptuShutterBias)            //shutter bias
 
 //danger payload 1410-1420
 CANAS_VAR(1410, uint8_t, ptuCmdDangerPayloadSafety)     //danger payload safety, default = 1    [0/1]
