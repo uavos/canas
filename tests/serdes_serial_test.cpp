@@ -1,12 +1,14 @@
-#define CATCH_CONFIG_MAIN
-#include "catch2/catch.hpp"
+#include <catch2/catch.hpp>
 
-#include <cstring>
 #include "canas/canas.h"
 
 using namespace canas;
+using namespace canas::serial;
 
-TEST_CASE("getters", "[CanAs]")
+namespace serial_test
+{
+
+TEST_CASE("serial::getters", "[CanAs]")
 {
     Packet<nodata> packet;
     packet.id = 1;
@@ -29,7 +31,7 @@ void checkPacket(PayloadType type, uint8_t size)
     REQUIRE(getDlcFromRaw(raw) == size + 4);
 }
 
-TEST_CASE("types and sizes", "[CanAs]")
+TEST_CASE("serial::types and sizes", "[CanAs]")
 {
     checkPacket<float>(ptFloat, 4);
     checkPacket<int32_t>(ptLong, 4);
@@ -56,7 +58,7 @@ void checkSerialize(const std::vector<uint8_t> &data, const T &value)
     }
 }
 
-TEST_CASE("serialize", "[CanAs]")
+TEST_CASE("serial::serialize", "[CanAs]")
 {
     checkSerialize<float>({0, 0, 0, 0, 8, 0, ptFloat, 0, 0, 0, 0, 0, 0}, 0);
     checkSerialize<int32_t>({0, 0, 0, 0, 8, 0, ptLong, 0, 0, 42, 0, 0, 0}, 42);
@@ -69,18 +71,6 @@ TEST_CASE("serialize", "[CanAs]")
     checkSerialize<uint8_t[4]>({0, 0, 0, 0, 8, 0, ptUchar4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
     checkSerialize<nodata>({0, 0, 0, 0, 4, 0, ptNoData, 0, 0}, nodata());
     checkSerialize<EmergencyData>({0, 0, 0, 0, 8, 0, ptError, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
-}
-
-bool operator==([[maybe_unused]] const nodata &a, [[maybe_unused]] const nodata &b)
-{
-    return true;
-}
-
-bool operator==(const EmergencyData &a, const EmergencyData &b)
-{
-    return a.errorCode == b.errorCode &&
-           a.locationId == b.locationId &&
-           a.operationId == b.operationId;
 }
 
 template<typename T, size_t TSize>
@@ -98,9 +88,7 @@ void checkDeserialize(const std::array<uint8_t, TSize> &data, const T &value)
         REQUIRE((packet.data == value));
 }
 
-
-
-TEST_CASE("deserialize", "[CanAs]")
+TEST_CASE("serial::deserialize", "[CanAs]")
 {
     checkDeserialize<float, 13>({0, 0, 0, 0, 4, 0, ptFloat, 0, 0, 0, 0, 0, 0}, 0);
     checkDeserialize<int32_t, 13>({0, 0, 0, 0, 4, 0, ptLong, 0, 0, 42, 0, 0, 0}, 42);
@@ -114,3 +102,5 @@ TEST_CASE("deserialize", "[CanAs]")
     checkDeserialize<nodata, 9>({0, 0, 0, 0, 0, 0, ptNoData, 0, 0}, nodata());
     checkDeserialize<EmergencyData, 13>({0, 0, 0, 0, 4, 0, ptError, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
 }
+
+} // namespace serial_test

@@ -1,9 +1,11 @@
 project('canas', 'cpp',
-    version: '2.1.3',
+    version: '2.2.0',
     default_options: ['cpp_std=c++17',
                       'warning_level=2'])
 
-sources = ['src/crc16ibm.cpp',
+sources = ['src/cansocket.cpp',
+           'src/core.cpp',
+           'src/crc16ibm.cpp',
            'src/errors.cpp',
            'src/serdes.cpp']
 canas_lib = static_library('canas',

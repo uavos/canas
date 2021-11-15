@@ -79,9 +79,6 @@ enum FpsSecurityCode {
     Done = 3
 };
 
-struct nodata {
-};
-
 template<typename T>
 static constexpr uint8_t PAYLOAD_TYPE;
 template<typename T>
@@ -90,10 +87,15 @@ static constexpr size_t PAYLOAD_SIZE = sizeof(T);
 static const size_t PACKET_MIN_SIZE = 9;
 static const size_t PACKET_MAX_SIZE = PACKET_MIN_SIZE + PAYLOAD_SIZE<uint8_t[4]>;
 
+struct nodata {
+    bool operator==([[maybe_unused]] const nodata &other);
+};
+
 struct EmergencyData {
     uint16_t errorCode;
     int8_t operationId; //unused
     int8_t locationId;
+    bool operator==(const EmergencyData &other);
 };
 
 template<typename T = nodata, uint32_t DEF_ID = 0, uint8_t DEF_SRV = 0, uint8_t DEF_TYPE = PAYLOAD_TYPE<T>>
@@ -107,31 +109,6 @@ struct Packet {
     uint8_t messageCode = 0;
     T data{};
 };
-
-template<typename C>
-uint32_t getIdFromRaw(const C &data);
-template<typename It>
-uint32_t getIdFromRaw(It begin, It end);
-template<typename C>
-uint8_t getDlcFromRaw(const C &data);
-template<typename It>
-uint8_t getDlcFromRaw(It begin, It end);
-template<typename C>
-uint8_t getNodeIdFromRaw(const C &data);
-template<typename It>
-uint8_t getNodeIdFromRaw(It begin, It end);
-template<typename C>
-uint8_t getDataTypeFromRaw(const C &data);
-template<typename It>
-uint8_t getDataTypeFromRaw(It begin, It end);
-template<typename C>
-uint8_t getSrvCodeFromRaw(const C &data);
-template<typename It>
-uint8_t getSrvCodeFromRaw(It begin, It end);
-template<typename C>
-uint8_t getMsgCodeFromRaw(const C &data);
-template<typename It>
-uint8_t getMsgCodeFromRaw(It begin, It end);
 
 } // namespace canas
 
