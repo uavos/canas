@@ -3,6 +3,7 @@
 #include "slip.h"
 
 #include <algorithm>
+#include <iomanip>
 #include "crc16ibm.h"
 
 using namespace crc16ibm;
@@ -116,6 +117,24 @@ void truncateByteStream(Container &data)
     auto it = std::find(data.begin(), data.end(), END);
     if(it != data.end())
         data.erase(data.begin(), std::next(it));
+}
+
+template<typename T>
+std::string dump(const PacketInfo<T> &packet)
+{
+    std::stringstream result;
+    auto it = packet.begin;
+    if(it == packet.end) {
+        result << "Empty packet";
+    } else {
+        while(it != packet.end) {
+            result << std::hex << std::showbase << int(*it);
+            it++;
+            if(it != packet.end)
+                result << " ";
+        }
+    }
+    return result.str();
 }
 
 } // namespace slip

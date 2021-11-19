@@ -10,7 +10,7 @@ using namespace slip;
 using namespace crc16ibm;
 
 template<typename... Ts>
-std::array<std::byte, sizeof...(Ts)> make_bytes(Ts &&... args) noexcept
+std::array<std::byte, sizeof...(Ts)> make_bytes(Ts &&...args) noexcept
 {
     return {std::byte(std::forward<Ts>(args))...};
 }
@@ -477,4 +477,21 @@ TEST_CASE("truncate", "[SLIP]")
     fill(expected, make_bytes(2));
     truncateByteStream(data);
     REQUIRE(std::equal(data.begin(), data.end(), expected.begin()));
+}
+
+TEST_CASE("dump", "[SLIP]")
+{
+    using Buffer = CircularBuffer<std::byte, 100>;
+    Buffer data;
+    PacketInfo<Buffer> packet;
+
+    fill(data, make_bytes(1, 2, 3, 4, 5, 20));
+    packet.begin = data.begin();
+    packet.end = data.end();
+    auto dumpString = dump(packet);
+    REQUIRE(dumpString == "0x1 0x2 0x3 0x4 0x5 0x14");
+    packet.begin = data.begin();
+    packet.end = data.begin();
+    dumpString = dump(packet);
+    REQUIRE(dumpString == "Empty packet");
 }

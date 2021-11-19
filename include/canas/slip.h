@@ -40,6 +40,8 @@ template<typename Container>
 void truncateByteStream(Container &data, const PacketInfo<Container> &packet);
 template<typename Container>
 void truncateByteStream(Container &data);
+template<typename T>
+std::string dump(const PacketInfo<T> &packet);
 
 } // namespace slip
 
