@@ -3,8 +3,7 @@ project('canas', 'cpp',
     default_options: ['cpp_std=c++17',
                       'warning_level=2'])
 
-sources = ['src/cansocket.cpp',
-           'src/core.cpp',
+sources = ['src/core.cpp',
            'src/crc16ibm.cpp',
            'src/errors.cpp',
            'src/serdes.cpp',
@@ -15,6 +14,10 @@ if host_machine.endian() == 'big'
     defines += '-DCANAS_BIG_ENDIAN'
 else
     defines += '-DCANAS_LITTLE_ENDIAN'
+endif
+
+if host_machine.system() == 'linux'
+    sources += 'src/cansocket.cpp'
 endif
 
 canas_raw_dep = declare_dependency(compile_args: defines,
