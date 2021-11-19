@@ -6,10 +6,12 @@
 
 namespace canas::cansocket
 {
-template<typename T, size_t TSize = PACKET_MIN_SIZE + PAYLOAD_SIZE<typename T::PayloadType>>
+static const size_t PAYLOAD_MIN_SIZE = 4;
+
+template<typename T>
 can_frame serialize(const T &message);
 template<typename T>
-T deserialize(const can_frame &frame);
+std::optional<T> deserialize(const can_frame &frame);
 
 uint8_t getNodeIdFromRaw(const can_frame &frame);
 uint8_t getDataTypeFromRaw(const can_frame &frame);

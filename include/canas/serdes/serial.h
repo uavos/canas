@@ -4,10 +4,13 @@
 
 namespace canas::serial
 {
+static const size_t PACKET_MIN_SIZE = 9;
+static const size_t PACKET_MAX_SIZE = PACKET_MIN_SIZE + PAYLOAD_SIZE<uint8_t[4]>;
+
 template<typename T, size_t TSize = PACKET_MIN_SIZE + PAYLOAD_SIZE<typename T::PayloadType>>
 std::array<std::byte, TSize> serialize(const T &message);
 template<typename T, typename Container>
-T deserialize(const Container &message);
+std::optional<T> deserialize(const Container &message);
 
 template<typename C>
 uint32_t getIdFromRaw(const C &data);

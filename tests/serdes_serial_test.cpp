@@ -102,6 +102,15 @@ TEST_CASE("serial::deserialize", "[CanAs]")
     checkDeserialize<nodata, 9>({0, 0, 0, 0, 0, 0, ptNoData, 0, 0}, nodata());
     checkDeserialize<EmergencyData, 13>({0, 0, 0, 0, 4, 0, ptError, 0, 0, 0, 1, 2, 3}, {1, 2, 3});
 }
+
+TEST_CASE("serial::deserialize fail", "[CanAs]")
+{
+    std::vector<uint8_t> data = {0, 0, 0, 0, 1, 0, ptNoData, 0, 0};
+    std::vector<std::byte> data2;
+    for(auto d: data)
+        data2.push_back(std::byte(d));
+    auto packet = deserialize<Packet<int>>(data2);
+    REQUIRE_FALSE(packet.has_value());
 }
 
 } // namespace serial_test

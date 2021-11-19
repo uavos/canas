@@ -20,12 +20,10 @@ std::array<std::byte, TSize> serialize(const T &message)
 }
 
 template<typename T, typename Container>
-T deserialize(const Container &message)
+std::optional<T> deserialize(const Container &message)
 {
-    if(PACKET_MIN_SIZE + PAYLOAD_SIZE < typename T::PayloadType >> message.size()) {
-        std::cerr << "Not enough container size" << std::endl;
-        return T();
-    }
+    if(PACKET_MIN_SIZE + PAYLOAD_SIZE < typename T::PayloadType > > message.size())
+        return std::nullopt;
     T result;
     auto pointer = message.data();
     pointer = deserializeField(pointer, result.id);

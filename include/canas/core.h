@@ -84,9 +84,6 @@ static constexpr uint8_t PAYLOAD_TYPE;
 template<typename T>
 static constexpr size_t PAYLOAD_SIZE = sizeof(T);
 
-static const size_t PACKET_MIN_SIZE = 9;
-static const size_t PACKET_MAX_SIZE = PACKET_MIN_SIZE + PAYLOAD_SIZE<uint8_t[4]>;
-
 struct nodata {
     bool operator==([[maybe_unused]] const nodata &other);
 };

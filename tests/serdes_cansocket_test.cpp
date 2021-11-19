@@ -82,7 +82,7 @@ void checkDeserialize(const std::vector<uint8_t> &data, const T &value)
     frame.can_dlc = data.size();
     for(size_t i = 0; i < data.size(); i++)
         frame.data[i] = data[i];
-    auto packet = deserialize<Packet<T>>(frame);
+    auto packet = deserialize<Packet<T>>(frame).value();
     REQUIRE(packet.id == 0);
     REQUIRE(packet.dlc == data.size());
     REQUIRE(packet.nodeId == frame.data[0]);
@@ -110,6 +110,13 @@ TEST_CASE("cansocket::deserialize", "[CanAs]")
     checkDeserialize<nodata>({0, ptNoData, 0, 0}, nodata());
     checkDeserialize<EmergencyData>({0, ptError, 0, 0, 0, 1, 2, 3}, {1, 2, 3});
 }
+
+TEST_CASE("cansocket::deserialize fail", "[CanAs]")
+{
+    can_frame frame;
+    frame.can_dlc = 0;
+    auto packet = deserialize<Packet<uint8_t>>(frame);
+    REQUIRE_FALSE(packet.has_value());
 }
 
 } // namespace cansocket_test
