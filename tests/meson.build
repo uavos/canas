@@ -7,6 +7,7 @@ if(not meson.is_cross_build())
                    'serdes_cansocket_test.cpp',
                    'serdes_serial_test.cpp',
                    'slip_test.cpp',
+                   'utils_test.cpp',
                     dependencies: [canas_dep,
                                    catch_dep])
 

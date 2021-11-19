@@ -7,7 +7,8 @@ sources = ['src/cansocket.cpp',
            'src/core.cpp',
            'src/crc16ibm.cpp',
            'src/errors.cpp',
-           'src/serdes.cpp']
+           'src/serdes.cpp',
+           'src/utils.cpp']
 
 defines = []
 if host_machine.endian() == 'big'
