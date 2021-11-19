@@ -62,16 +62,16 @@ void checkSerialize(const std::vector<uint8_t> &data, const T &value)
 TEST_CASE("cansocket::serialize", "[CanAs]")
 {
     checkSerialize<float>({0, ptFloat, 0, 0, 0, 0, 0, 0}, 0);
-    checkSerialize<int32_t>({0, ptLong, 0, 0, 42, 0, 0, 0}, 42);
-    checkSerialize<uint32_t>({0, ptUlong, 0, 0, 42, 0, 0, 0}, 42);
-    checkSerialize<int16_t>({0, ptShort, 0, 0, 42, 0}, 42);
-    checkSerialize<uint16_t>({0, ptUshort, 0, 0, 42, 0}, 42);
-    checkSerialize<int16_t[2]>({0, ptShort2, 0, 0, 4, 0, 2, 0}, {4, 2});
+    checkSerialize<int32_t>({0, ptLong, 0, 0, 0, 0, 0, 42}, 42);
+    checkSerialize<uint32_t>({0, ptUlong, 0, 0, 0, 0, 0, 42}, 42);
+    checkSerialize<int16_t>({0, ptShort, 0, 0, 0, 42}, 42);
+    checkSerialize<uint16_t>({0, ptUshort, 0, 0, 0, 42}, 42);
+    checkSerialize<int16_t[2]>({0, ptShort2, 0, 0, 0, 4, 0, 2}, {4, 2});
     checkSerialize<int8_t>({0, ptChar, 0, 0, 42}, 42);
     checkSerialize<uint8_t>({0, ptUchar, 0, 0, 42}, {42});
     checkSerialize<uint8_t[4]>({0, ptUchar4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
     checkSerialize<nodata>({0, ptNoData, 0, 0}, nodata());
-    checkSerialize<EmergencyData>({0, ptError, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
+    checkSerialize<EmergencyData>({0, ptError, 0, 0, 0, 1, 2, 3}, {1, 2, 3});
 }
 
 template<typename T>
@@ -99,16 +99,17 @@ void checkDeserialize(const std::vector<uint8_t> &data, const T &value)
 TEST_CASE("cansocket::deserialize", "[CanAs]")
 {
     checkDeserialize<float>({0, ptFloat, 0, 0, 0, 0, 0, 0}, 0);
-    checkDeserialize<int32_t>({0, ptLong, 0, 0, 42, 0, 0, 0}, 42);
-    checkDeserialize<uint32_t>({0, ptUlong, 0, 0, 42, 0, 0, 0}, 42);
-    checkDeserialize<int16_t>({0, ptShort, 0, 0, 42, 0}, 42);
-    checkDeserialize<uint16_t>({0, ptUshort, 0, 0, 42, 0}, 42);
-    checkDeserialize<int16_t[2]>({0, ptShort2, 0, 0, 4, 0, 2, 0}, {4, 2});
+    checkDeserialize<int32_t>({0, ptLong, 0, 0, 0, 0, 0, 42}, 42);
+    checkDeserialize<uint32_t>({0, ptUlong, 0, 0, 0, 0, 0, 42}, 42);
+    checkDeserialize<int16_t>({0, ptShort, 0, 0, 0, 42}, 42);
+    checkDeserialize<uint16_t>({0, ptUshort, 0, 0, 0, 42}, 42);
+    checkDeserialize<int16_t[2]>({0, ptShort2, 0, 0, 0, 4, 0, 2}, {4, 2});
     checkDeserialize<int8_t>({0, ptChar, 0, 0, 42}, 42);
     checkDeserialize<uint8_t>({0, ptUchar, 0, 0, 42}, {42});
     checkDeserialize<uint8_t[4]>({0, ptUchar4, 0, 0, 1, 2, 3, 4}, {1, 2, 3, 4});
     checkDeserialize<nodata>({0, ptNoData, 0, 0}, nodata());
-    checkDeserialize<EmergencyData>({0, ptError, 0, 0, 1, 0, 2, 3}, {1, 2, 3});
+    checkDeserialize<EmergencyData>({0, ptError, 0, 0, 0, 1, 2, 3}, {1, 2, 3});
+}
 }
 
 } // namespace cansocket_test
