@@ -63,3 +63,21 @@ CANAS_VAR(1406, int32_t, ptuShutterBias)            //shutter bias
 CANAS_VAR(1410, uint8_t, ptuCmdDangerPayloadSafety)     //danger payload safety, default = 1    [0/1]
 CANAS_VAR(1411, uint8_t, ptuCmdDangerPayloadActivate)   //danger payload activate               [0/1]
 CANAS_VAR(1412, uint8_t, ptuCmdDangerPayloadHeartbeat)  //danger payload heartbeat (incremented)
+
+//nav
+CANAS_VAR(1800, int32_t, navLatitude)
+CANAS_VAR(1801, int32_t, navLongitude)
+CANAS_VAR(1802, int32_t, navHeightAboveEllipsoid)
+CANAS_VAR(1803, int32_t, navAltitude)
+CANAS_VAR(1804, uint32_t, navSatellites)
+CANAS_VAR(1805, uint32_t, navSatellitesUsed)
+
+//servo-dc
+CANAS_VAR(1810, float, cmdAnalogVoltage)
+CANAS_VAR(1811, float, analogVoltage)
+
+//key-controller (servo-dc)
+CANAS_VAR(1820, uint16_t, outputState)
+CANAS_VAR(1821, uint16_t, cmdOutputState)
+CANAS_VAR(1822, uint32_t, keyStatesLow)
+CANAS_VAR(1823, uint32_t, keyStatesHigh)
