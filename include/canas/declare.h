@@ -25,22 +25,27 @@ CANAS_VAR(1318, uint8_t, ptuPitchMode)              //-----//-----
 //0
 CANAS_VAR(1340, int8_t, ptuCamera0CmdFocus)         //commanded direction for focus servo       [-1, 0, 1]
 CANAS_VAR(1341, int8_t, ptuCamera0CmdDia)           //commanded direction for diaphragm servo   [-1, 0, 1]
+CANAS_VAR(1342, int32_t, ptuCamera0ZoomPosition)
 //1343-1349 reserved
 //1
 CANAS_VAR(1350, int8_t, ptuCamera1CmdFocus)         //-----//-----
 CANAS_VAR(1351, int8_t, ptuCamera1CmdDia)           //-----//-----
+CANAS_VAR(1352, int32_t, ptuCamera1ZoomPosition)
 //1353-1359 reserved
 //2
 CANAS_VAR(1360, int8_t, ptuCamera2CmdFocus)         //-----//-----
 CANAS_VAR(1361, int8_t, ptuCamera2CmdDia)           //-----//-----
+CANAS_VAR(1362, int32_t, ptuCamera2ZoomPosition)
 //1363-1369 reserved
 //3
 CANAS_VAR(1370, int8_t, ptuCamera3CmdFocus)         //-----//-----
 CANAS_VAR(1371, int8_t, ptuCamera3CmdDia)           //-----//-----
+CANAS_VAR(1372, int32_t, ptuCamera3ZoomPosition)
 //1373-1379 reserved
 //4
 CANAS_VAR(1380, int8_t, ptuCamera4CmdFocus)         //-----//-----
 CANAS_VAR(1381, int8_t, ptuCamera4CmdDia)           //-----//-----
+CANAS_VAR(1382, int32_t, ptuCamera4ZoomPosition)
 //1383-1389 reserved
 
 //rangefinder 1390-1399
@@ -65,19 +70,19 @@ CANAS_VAR(1411, uint8_t, ptuCmdDangerPayloadActivate)   //danger payload activat
 CANAS_VAR(1412, uint8_t, ptuCmdDangerPayloadHeartbeat)  //danger payload heartbeat (incremented)
 
 //nav
-CANAS_VAR(1800, int32_t, navLatitude)
-CANAS_VAR(1801, int32_t, navLongitude)
-CANAS_VAR(1802, int32_t, navHeightAboveEllipsoid)
-CANAS_VAR(1803, int32_t, navAltitude)
-CANAS_VAR(1804, uint32_t, navSatellites)
-CANAS_VAR(1805, uint32_t, navSatellitesUsed)
+CANAS_VAR(1800, int32_t, ptuNavLatitude)
+CANAS_VAR(1801, int32_t, ptuNavLongitude)
+CANAS_VAR(1802, int32_t, ptuNavHeightAboveEllipsoid)
+CANAS_VAR(1803, int32_t, ptuNavAltitude)
+CANAS_VAR(1804, uint32_t, ptuNavSatellites)
+CANAS_VAR(1805, uint32_t, ptuNavSatellitesUsed)
 
 //servo-dc
-CANAS_VAR(1810, float, cmdAnalogVoltage)
-CANAS_VAR(1811, float, analogVoltage)
+CANAS_VAR(1810, float, ptuCmdAnalogVoltage)
+CANAS_VAR(1811, float, ptuAnalogVoltage)
 
 //key-controller (servo-dc)
-CANAS_VAR(1820, uint16_t, outputState)
-CANAS_VAR(1821, uint16_t, cmdOutputState)
-CANAS_VAR(1822, uint32_t, keyStatesLow)
-CANAS_VAR(1823, uint32_t, keyStatesHigh)
+CANAS_VAR(1820, uint16_t, ptuOutputState)
+CANAS_VAR(1821, uint16_t, ptuCmdOutputState)
+CANAS_VAR(1822, uint32_t, ptuKeyStatesLow)
+CANAS_VAR(1823, uint32_t, ptuKeyStatesHigh)

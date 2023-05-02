@@ -1,5 +1,5 @@
 project('canas', 'cpp',
-    version: '3.0.1',
+    version: '3.0.2',
     default_options: ['cpp_std=c++17',
                       'warning_level=2'])
 
