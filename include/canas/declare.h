@@ -69,20 +69,17 @@ CANAS_VAR(1410, uint8_t, ptuCmdDangerPayloadSafety)     //danger payload safety,
 CANAS_VAR(1411, uint8_t, ptuCmdDangerPayloadActivate)   //danger payload activate               [0/1]
 CANAS_VAR(1412, uint8_t, ptuCmdDangerPayloadHeartbeat)  //danger payload heartbeat (incremented)
 
-//nav
-CANAS_VAR(1800, int32_t, ptuNavLatitude)
-CANAS_VAR(1801, int32_t, ptuNavLongitude)
-CANAS_VAR(1802, int32_t, ptuNavHeightAboveEllipsoid)
-CANAS_VAR(1803, int32_t, ptuNavAltitude)
-CANAS_VAR(1804, uint32_t, ptuNavSatellites)
-CANAS_VAR(1805, uint32_t, ptuNavSatellitesUsed)
+// global position
+CANAS_VAR(1415, float, ptuGlobalYaw)                //current yaw in global coordinates [deg]
+CANAS_VAR(1416, float, ptuGlobalPitch)              //current pitch in global coordinates [deg]
+CANAS_VAR(1417, float, ptuGlobalRoll)               //current roll in global coordinates [deg]
 
-//servo-dc
-CANAS_VAR(1810, float, ptuCmdAnalogVoltage)
-CANAS_VAR(1811, float, ptuAnalogVoltage)
+//heater
+CANAS_VAR(1430, uint8_t, ptuCmdHeater)              //heater command                            [0/1]
+CANAS_VAR(1431, uint8_t, ptuHeaterState)            //heater state
 
-//key-controller (servo-dc)
-CANAS_VAR(1820, uint16_t, ptuOutputState)
-CANAS_VAR(1821, uint16_t, ptuCmdOutputState)
-CANAS_VAR(1822, uint32_t, ptuKeyStatesLow)
-CANAS_VAR(1823, uint32_t, ptuKeyStatesHigh)
+//GPS
+CANAS_VAR(1520, int32_t, ptuGpsLatitude)            //GPS latitude                          [deg * 1e-7]
+CANAS_VAR(1521, int32_t, ptuGpsLongitude)           //GPS longitude                         [deg * 1e-7]
+CANAS_VAR(1523, int32_t, ptuGpsAltitude)            //GPS altitude                              [mm]
+CANAS_VAR(1528, uint32_t, ptuGpsTime)               //GPS time (Unix time)                     [secs]
