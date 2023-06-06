@@ -64,15 +64,16 @@ CANAS_VAR(1404, uint8_t, ptuFanState)               //fan state                 
 CANAS_VAR(1405, float, ptuGeneralTemperature)       //general temperature                       C
 CANAS_VAR(1406, int32_t, ptuShutterBias)            //shutter bias
 
-//danger payload 1410-1420
-CANAS_VAR(1410, uint8_t, ptuCmdDangerPayloadSafety)     //danger payload safety, default = 1    [0/1]
-CANAS_VAR(1411, uint8_t, ptuCmdDangerPayloadActivate)   //danger payload activate               [0/1]
-CANAS_VAR(1412, uint8_t, ptuCmdDangerPayloadHeartbeat)  //danger payload heartbeat (incremented)
-
-// global position
-CANAS_VAR(1415, float, ptuGlobalYaw)                //current yaw in global coordinates [deg]
-CANAS_VAR(1416, float, ptuGlobalPitch)              //current pitch in global coordinates [deg]
-CANAS_VAR(1417, float, ptuGlobalRoll)               //current roll in global coordinates [deg]
+//danger payload 1410-1419
+CANAS_VAR(1410, uint8_t, ptuCmdDangerPayloadSafety)         //danger payload safety, default = 1    [0/1]
+CANAS_VAR(1411, uint8_t, ptuCmdDangerPayloadActivate)       //danger payload activate               [0/1]
+CANAS_VAR(1412, uint8_t, ptuCmdDangerPayloadHeartbeat)      //danger payload heartbeat (incremented)
+CANAS_VAR(1413, float, ptuDangerPayloadChargerCurrent)      //danger payload charging current
+CANAS_VAR(1414, uint8_t, ptuCmdDangerPayloadCharger)        //danger payload charging command
+CANAS_VAR(1415, uint8_t, ptuDangerPayloadChargerState)      //danger payload charging state
+CANAS_VAR(1416, uint8_t, ptuCmdDangerPayloadFuse)           //danger payload fuse enable/disable
+CANAS_VAR(1417, uint8_t, ptuDangerPayloadFuseState)         //danger payload fuse state
+CANAS_VAR(1418, uint32_t, ptuDangerPayloadSpentResource)    //danger payload spent resource
 
 //heater
 CANAS_VAR(1430, uint8_t, ptuCmdHeater)              //heater command                            [0/1]
@@ -83,3 +84,8 @@ CANAS_VAR(1520, int32_t, ptuGpsLatitude)            //GPS latitude              
 CANAS_VAR(1521, int32_t, ptuGpsLongitude)           //GPS longitude                         [deg * 1e-7]
 CANAS_VAR(1523, int32_t, ptuGpsAltitude)            //GPS altitude                              [mm]
 CANAS_VAR(1528, uint32_t, ptuGpsTime)               //GPS time (Unix time)                     [secs]
+
+//global position
+CANAS_VAR(1800, float, ptuGlobalYaw)                //current yaw in global coordinates [deg]
+CANAS_VAR(1801, float, ptuGlobalPitch)              //current pitch in global coordinates [deg]
+CANAS_VAR(1802, float, ptuGlobalRoll)               //current roll in global coordinates [deg]
