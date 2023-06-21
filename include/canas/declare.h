@@ -63,6 +63,7 @@ CANAS_VAR(1403, uint8_t, ptuCmdFan)                 //fan command               
 CANAS_VAR(1404, uint8_t, ptuFanState)               //fan state                                 [0/1]
 CANAS_VAR(1405, float, ptuGeneralTemperature)       //general temperature                       C
 CANAS_VAR(1406, int32_t, ptuShutterBias)            //shutter bias
+CANAS_VAR(1409, uint8_t, ptuGatesState)             //current gates state           [0 - closed, 1 - opened, 2 - middle]
 
 //danger payload 1410-1419
 CANAS_VAR(1410, uint8_t, ptuCmdDangerPayloadSafety)         //danger payload safety, default = 1    [0/1]
@@ -80,6 +81,7 @@ CANAS_VAR(1430, uint8_t, ptuCmdHeater)              //heater command            
 CANAS_VAR(1431, uint8_t, ptuHeaterState)            //heater state
 
 //GPS
+CANAS_VAR(1509, int32_t, ptuGpsHeadingAccuracy)     //GPS heading accuracy                  [deg * 1e-5]
 CANAS_VAR(1520, int32_t, ptuGpsLatitude)            //GPS latitude                          [deg * 1e-7]
 CANAS_VAR(1521, int32_t, ptuGpsLongitude)           //GPS longitude                         [deg * 1e-7]
 CANAS_VAR(1523, int32_t, ptuGpsAltitude)            //GPS altitude                              [mm]
