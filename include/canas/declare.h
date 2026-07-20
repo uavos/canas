@@ -49,8 +49,8 @@ CANAS_VAR(1382, int32_t, ptuCamera4ZoomPosition)
 //1383-1389 reserved
 
 //rangefinder joystick states
-CANAS_VAR(1388, uint8_t, ptuJoystickRangefinderPower)             // command    [0/1]
-CANAS_VAR(1389, uint8_t, ptuJoystickRangefinderPowerState)        // state      [0/1]
+CANAS_VAR(1388, uint8_t, ptuRangefinderCmdPower)                  // command    [0/1]
+CANAS_VAR(1389, uint8_t, ptuRangefinderPowerState)                // state      [0/1]
 CANAS_VAR(1395, uint8_t, ptuJoystickRangefinderMeasureCommand)    // command    [0/1/2] "off,single,continuous"
 CANAS_VAR(1396, uint8_t, ptuJoystickRangefinderMeasuringState)    // state      [0/1/2]
 
