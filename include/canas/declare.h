@@ -93,6 +93,15 @@ CANAS_VAR(1521, int32_t, ptuGpsLongitude)           //GPS longitude             
 CANAS_VAR(1523, int32_t, ptuGpsAltitude)            //GPS altitude                              [mm]
 CANAS_VAR(1528, uint32_t, ptuGpsTime)               //GPS time (Unix time)                     [secs]
 
+CANAS_VAR(1650, float, ptuYawCmdMinBound)
+CANAS_VAR(1651, float, ptuYawCmdMaxBound)
+CANAS_VAR(1652, float, ptuYawMinBound)
+CANAS_VAR(1653, float, ptuYawMaxBound)
+CANAS_VAR(1660, float, ptuPitchCmdMinBound)
+CANAS_VAR(1661, float, ptuPitchCmdMaxBound)
+CANAS_VAR(1662, float, ptuPitchMinBound)
+CANAS_VAR(1663, float, ptuPitchMaxBound)
+
 //global position
 CANAS_VAR(1800, float, ptuGlobalYaw)                //current yaw in global coordinates [deg]
 CANAS_VAR(1801, float, ptuGlobalPitch)              //current pitch in global coordinates [deg]
