@@ -63,12 +63,12 @@ CANAS_VAR(1394, uint8_t, ptuRangefinderRunning)     //current rangefinder state 
 
 //general PTU vars 1400
 CANAS_VAR(1400, uint8_t, ptuCmdGates)               //gates command                             [0/1]
-CANAS_VAR(1401, uint8_t, ptuCmdShutter)             //shutter command                           [1]
-CANAS_VAR(1402, uint8_t, ptuShutterState)           //shutter state                             [0/1]
+CANAS_VAR(1401, uint8_t, ptuCmdBolt)                //shutter command                           [1]
+CANAS_VAR(1402, uint8_t, ptuBoltState)              //shutter state                             [0/1]
 CANAS_VAR(1403, uint8_t, ptuCmdFan)                 //fan command                               [0/1]
 CANAS_VAR(1404, uint8_t, ptuFanState)               //fan state                                 [0/1]
 CANAS_VAR(1405, float, ptuGeneralTemperature)       //general temperature                       C
-CANAS_VAR(1406, int32_t, ptuShutterBias)            //shutter bias
+CANAS_VAR(1406, int32_t, ptuBoltBias)               //shutter bias
 CANAS_VAR(1409, uint8_t, ptuGatesState)             //current gates state           [0 - closed, 1 - opened, 2 - middle]
 
 //danger payload 1410-1419
