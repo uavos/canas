@@ -93,6 +93,9 @@ CANAS_VAR(1521, int32_t, ptuGpsLongitude)           //GPS longitude             
 CANAS_VAR(1523, int32_t, ptuGpsAltitude)            //GPS altitude                              [mm]
 CANAS_VAR(1528, uint32_t, ptuGpsTime)               //GPS time (Unix time)                     [secs]
 
+//joystick
+CANAS_VAR(1556, uint8_t, ptuJoystickTriggerButtonState)     //Joystick trigger button
+
 CANAS_VAR(1650, float, ptuYawCmdMinBound)
 CANAS_VAR(1651, float, ptuYawCmdMaxBound)
 CANAS_VAR(1652, float, ptuYawMinBound)
